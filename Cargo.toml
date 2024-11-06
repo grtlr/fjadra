@@ -12,6 +12,8 @@ path = "src/lib.rs"
 [dev-dependencies]
 anyhow = "1.0.92"
 itertools = "0.13.0"
+rand = "0.8.5"
+rand_distr = "0.4.3"
 rerun = { path = "../rerun/crates/top/rerun" }
 
 [lints.rust]

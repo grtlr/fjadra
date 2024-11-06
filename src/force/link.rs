@@ -5,7 +5,7 @@ use crate::lcg::LCG;
 
 use super::{
     jiggle::jiggle,
-    particle::{Particle, NodeIndex},
+    particle::{NodeIndex, Particle},
 };
 
 pub struct LinkFn(Box<dyn Fn(&(NodeIndex, NodeIndex), usize) -> f64>);
@@ -117,7 +117,11 @@ pub struct LinkForce {
     iterations: usize,
 }
 
-fn get_pair_mut(slice: &mut [Particle], i: NodeIndex, j: NodeIndex) -> Option<(&mut Particle, &mut Particle)> {
+fn get_pair_mut(
+    slice: &mut [Particle],
+    i: NodeIndex,
+    j: NodeIndex,
+) -> Option<(&mut Particle, &mut Particle)> {
     if i == j {
         return None;
     }

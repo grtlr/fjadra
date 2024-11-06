@@ -5,7 +5,7 @@ use crate::{
 
 use super::{
     jiggle::jiggle,
-    particle::{Particle, NodeIndex},
+    particle::{NodeIndex, Particle},
 };
 
 pub struct NodeFn(Box<dyn Fn(NodeIndex, usize) -> f64>);
