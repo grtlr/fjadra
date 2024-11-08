@@ -1769,6 +1769,8 @@ dependencies = [
  "rand",
  "rand_distr",
  "rerun",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

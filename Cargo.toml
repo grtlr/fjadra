@@ -15,6 +15,8 @@ itertools = "0.13.0"
 rand = "0.8.5"
 rand_distr = "0.4.3"
 rerun = { path = "../rerun/crates/top/rerun" }
+serde = { version = "1.0.214", features = ["derive"] }
+serde_json = "1.0.132"
 
 [lints.rust]
 unsafe_code = "deny"
