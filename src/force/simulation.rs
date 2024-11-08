@@ -3,19 +3,14 @@ use std::collections::BTreeMap;
 use crate::lcg::LCG;
 
 use super::center::CenterForce;
-use super::collide::Collide;
 use super::position::{PositionXForce, PositionYForce};
-use super::Center;
-use super::{
-    collide::CollideForce,
-    link::LinkForce,
-    many_body::{ManyBody, ManyBodyForce},
-    particle::Particle,
-    position::{PositionX, PositionY},
-    Link,
-};
+use super::{collide::CollideForce, link::LinkForce, many_body::ManyBodyForce, particle::Particle};
 
-enum Force {
+pub trait ForceBuilder {
+    fn initialize(self, particles: &[Particle]) -> Force;
+}
+
+pub enum Force {
     Collide(CollideForce),
     Center(CenterForce),
     PositionX(PositionXForce),
@@ -190,42 +185,17 @@ impl Simulation {
         self.particles.iter().map(|n: &Particle| [n.x, n.y])
     }
 
-    pub fn add_force_collide(mut self, name: impl ToString, force: Collide) -> Self {
+    /// Adds a force, defined by a [`ForceBuilder`], to the simulation.
+    ///
+    /// The [`ForceBuilder`] usually does some initialization of auxiliary data structures.
+    ///
+    /// Some examples are:
+    /// * [`Center`](crate::force::Center)
+    /// * [`PositionX`](crate::force::position::PositionX) and [`PositionY`](crate::force::position::PositionY)
+    /// * [`Link`](crate::force::link::Link) and [`ManyBody`](crate::force::many_body::ManyBody)
+    pub fn add_force(mut self, name: impl ToString, force: impl ForceBuilder) -> Self {
         let force = force.initialize(&self.particles);
-        self.forces.insert(name.to_string(), Force::Collide(force));
-        self
-    }
-
-    pub fn add_force_center(mut self, name: impl ToString, force: Center) -> Self {
-        let force = force.initialize();
-        self.forces.insert(name.to_string(), Force::Center(force));
-        self
-    }
-
-    pub fn add_force_x(mut self, name: impl ToString, force: PositionX) -> Self {
-        let force = force.initialize();
-        self.forces
-            .insert(name.to_string(), Force::PositionX(force));
-        self
-    }
-
-    pub fn add_force_y(mut self, name: impl ToString, force: PositionY) -> Self {
-        let force = force.initialize();
-        self.forces
-            .insert(name.to_string(), Force::PositionY(force));
-        self
-    }
-
-    pub fn add_force_link(mut self, name: impl ToString, force: Link) -> Self {
-        if let Some(force) = force.initialize(&self.particles) {
-            self.forces.insert(name.to_string(), Force::Link(force));
-        }
-        self
-    }
-
-    pub fn add_force_many_body(mut self, name: impl ToString, force: ManyBody) -> Self {
-        let force = force.initialize(&self.particles);
-        self.forces.insert(name.to_string(), Force::ManyBody(force));
+        self.forces.insert(name.to_string(), force);
         self
     }
 

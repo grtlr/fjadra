@@ -1,4 +1,4 @@
-use super::particle::Particle;
+use super::{particle::Particle, simulation::Force, ForceBuilder};
 
 pub struct PositionX {
     strength: f64,
@@ -28,12 +28,14 @@ impl PositionX {
         self.x = x;
         self
     }
+}
 
-    pub(crate) fn initialize(self) -> PositionXForce {
-        PositionXForce {
+impl ForceBuilder for PositionX {
+    fn initialize(self, _: &[Particle]) -> Force {
+        Force::PositionX(PositionXForce {
             strength: self.strength,
             x: self.x,
-        }
+        })
     }
 }
 
@@ -83,12 +85,14 @@ impl PositionY {
         self.y = y;
         self
     }
+}
 
-    pub(crate) fn initialize(self) -> PositionYForce {
-        PositionYForce {
+impl ForceBuilder for PositionY {
+    fn initialize(self, _: &[Particle]) -> Force {
+        Force::PositionY(PositionYForce {
             strength: self.strength,
             y: self.y,
-        }
+        })
     }
 }
 

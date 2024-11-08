@@ -6,6 +6,8 @@ use crate::lcg::LCG;
 use super::{
     jiggle::jiggle,
     particle::{NodeIndex, Particle},
+    simulation::Force,
+    ForceBuilder,
 };
 
 pub struct LinkFn(Box<dyn Fn(&(NodeIndex, NodeIndex), usize) -> f64>);
@@ -56,12 +58,10 @@ impl Link {
         self.iterations = iterations;
         self
     }
+}
 
-    pub(super) fn initialize(mut self, particles: &[Particle]) -> Option<LinkForce> {
-        if particles.is_empty() {
-            return None;
-        }
-
+impl ForceBuilder for Link {
+    fn initialize(mut self, _particles: &[Particle]) -> Force {
         // TODO(grtlr): This is in array d3.
         let mut count = HashMap::new();
         for link in &self.links {
@@ -96,7 +96,7 @@ impl Link {
             .map(|(i, link)| self.distance_fn.0(link, i))
             .collect();
 
-        Some(LinkForce {
+        Force::Link(LinkForce {
             links: self.links,
             bias,
             strengths,

@@ -6,6 +6,7 @@ use crate::{
 use super::{
     jiggle::jiggle,
     particle::{NodeIndex, Particle},
+    simulation::{Force, ForceBuilder},
 };
 
 pub struct NodeFn(Box<dyn Fn(NodeIndex, usize) -> f64>);
@@ -52,20 +53,22 @@ impl ManyBody {
         self.strength = f.into();
         self
     }
+}
 
-    pub(super) fn initialize(self, particles: &[Particle]) -> ManyBodyForce {
+impl ForceBuilder for ManyBody {
+    fn initialize(self, particles: &[Particle]) -> Force {
         let strengths = particles
             .iter()
             .enumerate()
             .map(|(i, node)| (self.strength.0)(node.index, i))
             .collect();
 
-        ManyBodyForce {
+        Force::ManyBody(ManyBodyForce {
             strengths,
             distance_min_2: self.distance_min * self.distance_min,
             distance_max_2: self.distance_max * self.distance_max,
             theta_2: self.theta * self.theta,
-        }
+        })
     }
 }
 

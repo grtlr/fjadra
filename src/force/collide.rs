@@ -4,7 +4,11 @@ use crate::{
     quadtree::{Entry, Quad, Quadtree, Visit},
 };
 
-use super::{jiggle::jiggle, particle::Particle};
+use super::{
+    jiggle::jiggle,
+    particle::Particle,
+    simulation::{Force, ForceBuilder},
+};
 
 pub struct Collide {
     strength: f64,
@@ -27,17 +31,6 @@ impl Collide {
         Default::default()
     }
 
-    pub(super) fn initialize(self, particles: &[Particle]) -> CollideForce {
-        CollideForce {
-            radii: particles
-                .iter()
-                .map(|n| (self.radius_fn)(n.index.into()))
-                .collect(),
-            strength: self.strength,
-            iterations: self.iterations,
-        }
-    }
-
     pub fn radius<F>(mut self, f: F) -> Self
     where
         F: Fn(usize) -> f64 + 'static,
@@ -49,6 +42,19 @@ impl Collide {
     pub fn iterations(mut self, iterations: usize) -> Self {
         self.iterations = iterations;
         self
+    }
+}
+
+impl ForceBuilder for Collide {
+    fn initialize(self, particles: &[Particle]) -> Force {
+        Force::Collide(CollideForce {
+            radii: particles
+                .iter()
+                .map(|n| (self.radius_fn)(n.index.into()))
+                .collect(),
+            strength: self.strength,
+            iterations: self.iterations,
+        })
     }
 }
 

@@ -36,13 +36,13 @@ fn main() -> anyhow::Result<()> {
     let mut simulation = SimulationBuilder::default()
         .with_velocity_decay(0.1)
         .build(ids.iter().map(|_| Option::<[f64; 2]>::None))
-        .add_force_x("x", PositionX::new().strength(0.1))
-        .add_force_y("y", PositionY::new().strength(0.1))
-        .add_force_collide(
+        .add_force("x", PositionX::new().strength(0.1))
+        .add_force("y", PositionY::new().strength(0.1))
+        .add_force(
             "collide",
             Collide::new().radius(move |i| cloned[i] as f64 + 1.0),
         )
-        .add_force_many_body("charge", ManyBody::new().strength(0.));
+        .add_force("charge", ManyBody::new().strength(0.));
 
     for positions in simulation.iter() {
         rec.log(

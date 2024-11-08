@@ -1,4 +1,7 @@
-use super::particle::Particle;
+use super::{
+    particle::Particle,
+    simulation::{Force, ForceBuilder},
+};
 
 #[derive(Clone, Debug)]
 pub struct Center {
@@ -36,13 +39,15 @@ impl Center {
         self.strength = strength;
         self
     }
+}
 
-    pub(crate) fn initialize(self) -> CenterForce {
-        CenterForce {
+impl ForceBuilder for Center {
+    fn initialize(self, _: &[super::particle::Particle]) -> Force {
+        Force::Center(CenterForce {
             strength: self.strength,
             x: self.x,
             y: self.y,
-        }
+        })
     }
 }
 

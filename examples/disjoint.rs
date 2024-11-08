@@ -1,4 +1,7 @@
-use fjadra::force::{Collide, SimulationBuilder};
+use fjadra::{
+    force::{Collide, SimulationBuilder},
+    PositionX, PositionY,
+};
 use rerun::GraphNodes;
 
 const NUM_NODES: usize = 10;
@@ -14,9 +17,9 @@ fn main() -> anyhow::Result<()> {
         // .with_alpha_target(0.3)
         .with_velocity_decay(0.1)
         .build(nodes.iter().cloned().map(|(_, p)| p))
-        .add_force_collide("collide", Collide::new().radius(|_| 20.0).iterations(3))
-        .add_force_x("x", Default::default())
-        .add_force_y("y", Default::default());
+        .add_force("collide", Collide::new().radius(|_| 20.0).iterations(3))
+        .add_force("x", PositionX::new())
+        .add_force("y", PositionY::new());
 
     while !simulation.finished() {
         simulation.tick(3);

@@ -28,12 +28,12 @@ fn main() -> anyhow::Result<()> {
 
     let mut simulation = SimulationBuilder::default()
         .build(graph.nodes.iter().map(|_| Option::<[f64; 2]>::None))
-        .add_force_link(
+        .add_force(
             "link",
             Link::new(graph.links.iter().map(|link| (link.source, link.target))),
         )
-        .add_force_many_body("charge", ManyBody::new())
-        .add_force_center("center", Center::new());
+        .add_force("charge", ManyBody::new())
+        .add_force("center", Center::new());
 
     let rec = rr::RecordingStreamBuilder::new("fjadra_miserables").spawn()?;
 
