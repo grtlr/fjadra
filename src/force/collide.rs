@@ -38,7 +38,7 @@ impl Collide {
         }
     }
 
-    pub fn with_radius<F>(mut self, f: F) -> Self
+    pub fn radius<F>(mut self, f: F) -> Self
     where
         F: Fn(usize) -> f64 + 'static,
     {
@@ -46,7 +46,7 @@ impl Collide {
         self
     }
 
-    pub fn with_iterations(mut self, iterations: usize) -> Self {
+    pub fn iterations(mut self, iterations: usize) -> Self {
         self.iterations = iterations;
         self
     }

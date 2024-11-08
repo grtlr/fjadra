@@ -48,7 +48,7 @@ impl ManyBody {
         Default::default()
     }
 
-    pub fn with_strength(mut self, f: impl Into<NodeFn>) -> Self {
+    pub fn strength(mut self, f: impl Into<NodeFn>) -> Self {
         self.strength = f.into();
         self
     }

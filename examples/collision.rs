@@ -36,34 +36,23 @@ fn main() -> anyhow::Result<()> {
     let mut simulation = SimulationBuilder::default()
         .with_velocity_decay(0.1)
         .build(ids.iter().map(|_| Option::<[f64; 2]>::None))
-        .add_force_x("x".into(), PositionX::new().with_strength(0.1))
-        .add_force_y("y".into(), PositionY::new().with_strength(0.1))
+        .add_force_x("x", PositionX::new().strength(0.1))
+        .add_force_y("y", PositionY::new().strength(0.1))
         .add_force_collide(
-            "collide".into(),
-            Collide::new().with_radius(move |i| cloned[i] as f64 + 1.0),
+            "collide",
+            Collide::new().radius(move |i| cloned[i] as f64 + 1.0),
         )
-        .add_force_many_body("charge".into(), ManyBody::new().with_strength(0.));
+        .add_force_many_body("charge", ManyBody::new().strength(0.));
 
-    while !simulation.finished() {
-        simulation.tick(1);
-
+    for positions in simulation.iter() {
         rec.log(
             "/collision",
             &rr::GraphNodes::new(ids.clone())
-                .with_positions(simulation.positions().map(|[x, y]| [x as f32, y as f32]))
+                .with_positions(positions.into_iter().map(|[x, y]| [x as f32, y as f32]))
                 .with_radii(radii.clone())
                 .with_colors(colors.clone()),
         )?;
     }
-
-    // We log one final time after the layout is finished
-    rec.log(
-        "/collision",
-        &rr::GraphNodes::new(ids)
-            .with_positions(simulation.positions().map(|[x, y]| [x as f32, y as f32]))
-            .with_radii(radii)
-            .with_colors(colors),
-    )?;
 
     Ok(())
 }

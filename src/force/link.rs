@@ -42,17 +42,17 @@ impl Link {
         }
     }
 
-    pub fn with_distance(mut self, f: impl Into<LinkFn>) -> Self {
+    pub fn distance(mut self, f: impl Into<LinkFn>) -> Self {
         self.distance_fn = f.into();
         self
     }
 
-    pub fn with_strength(mut self, f: impl Into<LinkFn>) -> Self {
+    pub fn strength(mut self, f: impl Into<LinkFn>) -> Self {
         self.strength_fn = Some(f.into());
         self
     }
 
-    pub fn with_iterations(mut self, iterations: usize) -> Self {
+    pub fn iterations(mut self, iterations: usize) -> Self {
         self.iterations = iterations;
         self
     }

@@ -19,12 +19,12 @@ impl PositionX {
         Default::default()
     }
 
-    pub fn with_strength(mut self, strength: f64) -> Self {
+    pub fn strength(mut self, strength: f64) -> Self {
         self.strength = strength;
         self
     }
 
-    pub fn with_x(mut self, x: f64) -> Self {
+    pub fn x(mut self, x: f64) -> Self {
         self.x = x;
         self
     }
@@ -74,12 +74,12 @@ impl PositionY {
         Default::default()
     }
 
-    pub fn with_strength(mut self, strength: f64) -> Self {
+    pub fn strength(mut self, strength: f64) -> Self {
         self.strength = strength;
         self
     }
 
-    pub fn with_x(mut self, x: f64) -> Self {
+    pub fn y(mut self, x: f64) -> Self {
         self.y = x;
         self
     }

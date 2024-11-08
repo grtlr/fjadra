@@ -124,6 +124,31 @@ pub struct Simulation {
     particles: Vec<Particle>,
 }
 
+pub struct SimulationIter<'a> {
+    simulation: &'a mut Simulation,
+    finished: bool,
+    emitted: bool,
+}
+
+impl<'a> Iterator for SimulationIter<'a> {
+    type Item = Vec<[f64; 2]>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.emitted {
+            return None;
+        }
+
+        if self.finished {
+            self.emitted = true;
+            return Some(self.simulation.positions().collect());
+        } else {
+            self.simulation.tick(1);
+            self.finished = self.simulation.finished();
+            Some(self.simulation.positions().collect())
+        }
+    }
+}
+
 impl Simulation {
     pub fn step(&mut self) {
         while self.alpha > self.alpha_min {
@@ -161,34 +186,45 @@ impl Simulation {
         self.particles.iter().map(|n: &Particle| [n.x, n.y])
     }
 
-    pub fn add_force_collide(mut self, name: String, force: Collide) -> Self {
+    pub fn add_force_collide(mut self, name: impl ToString, force: Collide) -> Self {
         let force = force.initialize(&self.particles);
-        self.forces.insert(name, Force::Collide(force));
+        self.forces.insert(name.to_string(), Force::Collide(force));
         self
     }
 
-    pub fn add_force_x(mut self, name: String, force: PositionX) -> Self {
+    pub fn add_force_x(mut self, name: impl ToString, force: PositionX) -> Self {
         let force = force.initialize();
-        self.forces.insert(name, Force::PositionX(force));
+        self.forces
+            .insert(name.to_string(), Force::PositionX(force));
         self
     }
 
-    pub fn add_force_y(mut self, name: String, force: PositionY) -> Self {
+    pub fn add_force_y(mut self, name: impl ToString, force: PositionY) -> Self {
         let force = force.initialize();
-        self.forces.insert(name, Force::PositionY(force));
+        self.forces
+            .insert(name.to_string(), Force::PositionY(force));
         self
     }
 
-    pub fn add_force_link(mut self, name: String, force: Link) -> Self {
+    pub fn add_force_link(mut self, name: impl ToString, force: Link) -> Self {
         if let Some(force) = force.initialize(&self.particles) {
-            self.forces.insert(name, Force::Link(force));
+            self.forces.insert(name.to_string(), Force::Link(force));
         }
         self
     }
 
-    pub fn add_force_many_body(mut self, name: String, force: ManyBody) -> Self {
+    pub fn add_force_many_body(mut self, name: impl ToString, force: ManyBody) -> Self {
         let force = force.initialize(&self.particles);
-        self.forces.insert(name, Force::ManyBody(force));
+        self.forces.insert(name.to_string(), Force::ManyBody(force));
         self
+    }
+
+    pub fn iter(&mut self) -> SimulationIter<'_> {
+        let emitted = self.finished();
+        SimulationIter {
+            simulation: self,
+            finished: false,
+            emitted,
+        }
     }
 }

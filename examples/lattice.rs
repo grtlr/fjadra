@@ -37,13 +37,13 @@ fn main() -> anyhow::Result<()> {
     let mut simulation = SimulationBuilder::default()
         .build(nodes.iter().map(|_| Option::<[f64; 2]>::None))
         .add_force_link(
-            "link".into(),
+            "link",
             Link::new(edges.clone().into_iter())
-                .with_strength(1.0)
-                .with_distance(60.0)
-                .with_iterations(10),
+                .strength(1.0)
+                .distance(60.0)
+                .iterations(10),
         )
-        .add_force_many_body("charge".into(), ManyBody::new().with_strength(-70.0));
+        .add_force_many_body("charge", ManyBody::new().strength(-70.0));
 
     while !simulation.finished() {
         simulation.tick(3);

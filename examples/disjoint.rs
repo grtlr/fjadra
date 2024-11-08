@@ -14,12 +14,9 @@ fn main() -> anyhow::Result<()> {
         // .with_alpha_target(0.3)
         .with_velocity_decay(0.1)
         .build(nodes.iter().cloned().map(|(_, p)| p))
-        .add_force_collide(
-            "collide".into(),
-            Collide::new().with_radius(|_| 20.0).with_iterations(3),
-        )
-        .add_force_x("x".into(), Default::default())
-        .add_force_y("y".into(), Default::default());
+        .add_force_collide("collide", Collide::new().radius(|_| 20.0).iterations(3))
+        .add_force_x("x", Default::default())
+        .add_force_y("y", Default::default());
 
     while !simulation.finished() {
         simulation.tick(3);
