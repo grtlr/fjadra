@@ -193,9 +193,9 @@ impl Simulation {
     /// * [`Center`](crate::force::Center)
     /// * [`PositionX`](crate::force::position::PositionX) and [`PositionY`](crate::force::position::PositionY)
     /// * [`Link`](crate::force::link::Link) and [`ManyBody`](crate::force::many_body::ManyBody)
-    pub fn add_force(mut self, name: impl ToString, force: impl ForceBuilder) -> Self {
+    pub fn add_force(mut self, name: impl AsRef<str>, force: impl ForceBuilder) -> Self {
         let force = force.initialize(&self.particles);
-        self.forces.insert(name.to_string(), force);
+        self.forces.insert(name.as_ref().to_owned(), force);
         self
     }
 

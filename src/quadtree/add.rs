@@ -69,8 +69,8 @@ impl<Q: Default, T> Quadtree<Q, T> {
                                 return;
                             }
 
-                            parent[i] = Some(create_empty_internal(&mut self.store).into());
-                            new_internal = parent[i].as_mut().unwrap();
+                            new_internal =
+                                parent[i].insert(create_empty_internal(&mut self.store).into());
                         }
                     }
                     unreachable!()

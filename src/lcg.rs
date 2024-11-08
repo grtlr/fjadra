@@ -3,7 +3,7 @@ const C: u64 = 1_013_904_223;
 const M: u64 = 4_294_967_296;
 
 /// A simple linear congruential generator (LCG) that produces a sequence of pseudo-random numbers.
-/// 
+///
 /// By default the LCG is initialized with a seed of 0. The parameters are as follows:
 /// ```rs
 /// const A: u64 = 1_664_525;
