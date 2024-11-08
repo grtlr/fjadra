@@ -79,8 +79,8 @@ impl PositionY {
         self
     }
 
-    pub fn y(mut self, x: f64) -> Self {
-        self.y = x;
+    pub fn y(mut self, y: f64) -> Self {
+        self.y = y;
         self
     }
 
