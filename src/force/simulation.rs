@@ -2,8 +2,10 @@ use std::collections::BTreeMap;
 
 use crate::lcg::LCG;
 
+use super::center::CenterForce;
 use super::collide::Collide;
 use super::position::{PositionXForce, PositionYForce};
+use super::Center;
 use super::{
     collide::CollideForce,
     link::LinkForce,
@@ -15,6 +17,7 @@ use super::{
 
 enum Force {
     Collide(CollideForce),
+    Center(CenterForce),
     PositionX(PositionXForce),
     PositionY(PositionYForce),
     Link(LinkForce),
@@ -167,6 +170,7 @@ impl Simulation {
             for force in &mut self.forces.values_mut() {
                 match force {
                     Force::Collide(c) => c.force(&mut self.random, &mut self.particles),
+                    Force::Center(c) => c.force(&mut self.particles),
                     Force::PositionX(p) => p.force(self.alpha, &mut self.particles),
                     Force::PositionY(p) => p.force(self.alpha, &mut self.particles),
                     Force::Link(l) => l.force(self.alpha, &mut self.random, &mut self.particles),
@@ -189,6 +193,12 @@ impl Simulation {
     pub fn add_force_collide(mut self, name: impl ToString, force: Collide) -> Self {
         let force = force.initialize(&self.particles);
         self.forces.insert(name.to_string(), Force::Collide(force));
+        self
+    }
+
+    pub fn add_force_center(mut self, name: impl ToString, force: Center) -> Self {
+        let force = force.initialize();
+        self.forces.insert(name.to_string(), Force::Center(force));
         self
     }
 
