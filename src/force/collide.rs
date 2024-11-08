@@ -27,9 +27,9 @@ impl Collide {
         Default::default()
     }
 
-    pub(super) fn initialize(self, nodes: &[Particle]) -> CollideForce {
+    pub(super) fn initialize(self, particles: &[Particle]) -> CollideForce {
         CollideForce {
-            radii: nodes
+            radii: particles
                 .iter()
                 .map(|n| (self.radius_fn)(n.index.into()))
                 .collect(),
@@ -60,7 +60,7 @@ pub struct CollideForce {
 }
 
 impl CollideForce {
-    pub fn force(&mut self, random: &mut LCG, nodes: &mut [Particle]) {
+    pub fn force(&mut self, random: &mut LCG, particles: &mut [Particle]) {
         let iterations = self.iterations;
 
         let prepare = |mut quad: Quad<'_, f64, NodeIndex>| match quad.inner() {
@@ -81,19 +81,19 @@ impl CollideForce {
                          xi: f64,
                          yi: f64,
                          ri: f64,
-                         nodes: &mut [Particle],
+                         particles: &mut [Particle],
                          quad: Quad<'_, f64, NodeIndex>|
          -> Visit {
             let [x0, y0, x1, y1] = quad.extent().into();
             let rj = quad.value();
             let r = ri + rj;
             match quad.inner() {
-                // We only look at the first value in the leafs. Because we visit all nodes, we will
+                // We only look at the first value in the leafs. Because we visit all particles, we will
                 // resolve the others eventually as well.
                 Entry::Leaf { data, .. } => {
                     if *data > index {
                         // Avoid the mutable borrow.
-                        let (left, right) = nodes.split_at_mut(usize::from(*data));
+                        let (left, right) = particles.split_at_mut(usize::from(*data));
                         let node = &mut left[usize::from(index)];
                         let data = &mut right[0];
 
@@ -133,16 +133,16 @@ impl CollideForce {
 
         for _ in 0..iterations {
             // TODO(grtlr): get rid of this!
-            let tmp = (&*nodes)
+            let tmp = (&*particles)
                 .iter()
                 .map(|node| (node.x, node.y, node.index))
                 .collect::<Vec<_>>();
-            let mut tree = Quadtree::<f64, NodeIndex>::from_nodes(tmp.iter().cloned());
+            let mut tree = Quadtree::<f64, NodeIndex>::from_particles(tmp.iter().cloned());
             tree.visit_after(prepare);
 
             for (xi, yi, index) in tmp {
                 let ri = self.radii[usize::from(index)];
-                tree.visit(|quad| apply(index, xi, yi, ri, nodes, quad));
+                tree.visit(|quad| apply(index, xi, yi, ri, particles, quad));
             }
         }
     }

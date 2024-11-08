@@ -57,8 +57,8 @@ impl Link {
         self
     }
 
-    pub(super) fn initialize(mut self, nodes: &[Particle]) -> Option<LinkForce> {
-        if nodes.is_empty() {
+    pub(super) fn initialize(mut self, particles: &[Particle]) -> Option<LinkForce> {
+        if particles.is_empty() {
             return None;
         }
 
@@ -139,11 +139,11 @@ fn get_pair_mut(
 }
 
 impl LinkForce {
-    pub fn force(&mut self, alpha: f64, random: &mut LCG, nodes: &mut [Particle]) {
+    pub fn force(&mut self, alpha: f64, random: &mut LCG, particles: &mut [Particle]) {
         for _ in 0..self.iterations {
             for (i, link) in self.links.iter().enumerate() {
                 let (source, target) = link;
-                let Some((source, target)) = get_pair_mut(nodes, *source, *target) else {
+                let Some((source, target)) = get_pair_mut(particles, *source, *target) else {
                     // Don't apply forces if we an edge where `source == target`.
                     continue;
                 };
@@ -178,13 +178,13 @@ mod test {
 
     #[test]
     fn retrieve_two_mutable_borrows() {
-        let mut nodes = vec![
+        let mut particles = vec![
             Particle::new(0, 0.0, 0.0),
             Particle::new(1, 1.0, 1.0),
             Particle::new(2, 2.0, 2.0),
         ];
 
-        let (a, b) = get_pair_mut(&mut nodes, 0.into(), 1.into()).unwrap();
+        let (a, b) = get_pair_mut(&mut particles, 0.into(), 1.into()).unwrap();
 
         assert_eq!(a.index, 0.into());
         assert_eq!(b.index, 1.into());
@@ -192,13 +192,13 @@ mod test {
 
     #[test]
     fn retrieve_two_mutable_borrows_reverse() {
-        let mut nodes = vec![
+        let mut particles = vec![
             Particle::new(0, 0.0, 0.0),
             Particle::new(1, 1.0, 1.0),
             Particle::new(2, 2.0, 2.0),
         ];
 
-        let (a, b) = get_pair_mut(&mut nodes, 1.into(), 0.into()).unwrap();
+        let (a, b) = get_pair_mut(&mut particles, 1.into(), 0.into()).unwrap();
 
         assert_eq!(a.index, 1.into());
         assert_eq!(b.index, 0.into());

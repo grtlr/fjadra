@@ -129,9 +129,9 @@ impl<Q: Default, T> Default for Quadtree<Q, T> {
 }
 
 impl<Q: Default, T> Quadtree<Q, T> {
-    pub fn from_nodes(nodes: impl Iterator<Item = (f64, f64, T)>) -> Self {
+    pub fn from_particles(particles: impl Iterator<Item = (f64, f64, T)>) -> Self {
         let mut tree = Self::default();
-        for (x, y, value) in nodes {
+        for (x, y, value) in particles {
             tree.insert(x, y, value);
         }
         tree

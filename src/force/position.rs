@@ -44,10 +44,10 @@ pub struct PositionXForce {
 }
 
 impl PositionXForce {
-    pub fn force(&mut self, alpha: f64, nodes: &mut [Particle]) {
+    pub fn force(&mut self, alpha: f64, particles: &mut [Particle]) {
         let strengths = std::iter::repeat(self.strength);
 
-        for (node, si) in nodes.iter_mut().zip(strengths) {
+        for (node, si) in particles.iter_mut().zip(strengths) {
             let d = self.x - node.x;
             node.vx += d * si * alpha;
         }
@@ -99,10 +99,10 @@ pub struct PositionYForce {
 }
 
 impl PositionYForce {
-    pub fn force(&mut self, alpha: f64, nodes: &mut [Particle]) {
+    pub fn force(&mut self, alpha: f64, particles: &mut [Particle]) {
         let strengths = std::iter::repeat(self.strength);
 
-        for (node, si) in nodes.iter_mut().zip(strengths) {
+        for (node, si) in particles.iter_mut().zip(strengths) {
             let d = self.y - node.y;
             node.vy += d * si * alpha;
         }

@@ -1,6 +1,6 @@
 use std::hash::Hash;
 
-/// Reflects the index in the input list of nodes.
+/// Reflects the index in the input list of particles.
 #[derive(Debug, Clone, Copy, PartialOrd, Ord, PartialEq, Eq, Hash)]
 #[repr(transparent)]
 pub struct NodeIndex(usize);

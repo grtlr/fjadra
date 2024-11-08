@@ -140,7 +140,7 @@ mod test {
     }
 
     #[test]
-    fn accumulate_nodes_count() {
+    fn accumulate_particles_count() {
         let mut q = super::Quadtree::<usize>::default();
 
         let n: usize = 20;

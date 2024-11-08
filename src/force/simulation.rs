@@ -84,14 +84,14 @@ impl SimulationBuilder {
 impl SimulationBuilder {
     // TODO(grtlr): build with fixed positions!
 
-    pub fn build<P>(&self, nodes: impl IntoIterator<Item = Option<P>>) -> Simulation
+    pub fn build<P>(&self, particles: impl IntoIterator<Item = Option<P>>) -> Simulation
     where
         P: Into<[f64; 2]>,
     {
         let initial_radius = 10.0;
         let initial_angle = std::f64::consts::PI * (3.0 - (5.0f64).sqrt());
 
-        let nodes = nodes.into_iter().enumerate().map(|(ix, p)| {
+        let particles = particles.into_iter().enumerate().map(|(ix, p)| {
             let [x, y] = p.map(|x| x.into()).unwrap_or_else(|| {
                 let radius = initial_radius * (0.5 + ix as f64).sqrt();
                 let angle = ix as f64 * initial_angle;
@@ -106,7 +106,7 @@ impl SimulationBuilder {
             alpha_decay: self.alpha_decay,
             alpha_target: self.alpha_target,
             velocity_decay: self.velocity_decay,
-            nodes: nodes.collect(),
+            particles: particles.collect(),
             random: self.random.clone(),
             forces: Default::default(),
         }
@@ -121,7 +121,7 @@ pub struct Simulation {
     velocity_decay: f64,
     random: LCG,
     forces: BTreeMap<String, Force>,
-    nodes: Vec<Particle>,
+    particles: Vec<Particle>,
 }
 
 impl Simulation {
@@ -141,26 +141,28 @@ impl Simulation {
 
             for force in &mut self.forces.values_mut() {
                 match force {
-                    Force::Collide(c) => c.force(&mut self.random, &mut self.nodes),
-                    Force::PositionX(p) => p.force(self.alpha, &mut self.nodes),
-                    Force::PositionY(p) => p.force(self.alpha, &mut self.nodes),
-                    Force::Link(l) => l.force(self.alpha, &mut self.random, &mut self.nodes),
-                    Force::ManyBody(m) => m.force(self.alpha, &mut self.random, &mut self.nodes),
+                    Force::Collide(c) => c.force(&mut self.random, &mut self.particles),
+                    Force::PositionX(p) => p.force(self.alpha, &mut self.particles),
+                    Force::PositionY(p) => p.force(self.alpha, &mut self.particles),
+                    Force::Link(l) => l.force(self.alpha, &mut self.random, &mut self.particles),
+                    Force::ManyBody(m) => {
+                        m.force(self.alpha, &mut self.random, &mut self.particles)
+                    }
                 }
             }
 
-            for n in &mut self.nodes {
+            for n in &mut self.particles {
                 n.apply_velocities(self.velocity_decay);
             }
         }
     }
 
     pub fn positions(&self) -> impl Iterator<Item = [f64; 2]> + '_ {
-        self.nodes.iter().map(|n: &Particle| [n.x, n.y])
+        self.particles.iter().map(|n: &Particle| [n.x, n.y])
     }
 
     pub fn add_force_collide(mut self, name: String, force: Collide) -> Self {
-        let force = force.initialize(&self.nodes);
+        let force = force.initialize(&self.particles);
         self.forces.insert(name, Force::Collide(force));
         self
     }
@@ -178,14 +180,14 @@ impl Simulation {
     }
 
     pub fn add_force_link(mut self, name: String, force: Link) -> Self {
-        if let Some(force) = force.initialize(&self.nodes) {
+        if let Some(force) = force.initialize(&self.particles) {
             self.forces.insert(name, Force::Link(force));
         }
         self
     }
 
     pub fn add_force_many_body(mut self, name: String, force: ManyBody) -> Self {
-        let force = force.initialize(&self.nodes);
+        let force = force.initialize(&self.particles);
         self.forces.insert(name, Force::ManyBody(force));
         self
     }
