@@ -28,7 +28,7 @@ pub struct SchemeCategory10;
 const CATEGORY_10: &str = "1f77b4ff7f0e2ca02cd627289467bd8c564be377c27f7f7fbcbd2217becf";
 
 impl From<SchemeCategory10> for ScaleOrdinal<10> {
-    fn from(_: SchemeCategory10) -> ScaleOrdinal<10> {
+    fn from(_: SchemeCategory10) -> Self {
         let mut colors = [Color { r: 0, g: 0, b: 0 }; 10];
         for (i, c) in CATEGORY_10.as_bytes().chunks(6).enumerate() {
             let r = u8::from_str_radix(std::str::from_utf8(&c[0..2]).unwrap(), 16).unwrap();
@@ -37,6 +37,6 @@ impl From<SchemeCategory10> for ScaleOrdinal<10> {
             colors[i] = Color { r, g, b };
         }
 
-        ScaleOrdinal { domain: colors }
+        Self { domain: colors }
     }
 }

@@ -15,6 +15,12 @@ impl<T> Copy for Handle<T> {}
 #[derive(Clone)]
 pub struct Store<T>(Vec<T>);
 
+impl<T> Default for Store<T> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<T> Store<T> {
     pub fn new() -> Self {
         Self(Vec::new())
@@ -45,7 +51,7 @@ impl<T> Store<T> {
 impl<T: std::fmt::Debug> std::fmt::Debug for Store<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let vs = self.iter().collect::<Vec<_>>();
-        write!(f, "Store({:?})", vs)
+        write!(f, "Store({vs:?})")
     }
 }
 

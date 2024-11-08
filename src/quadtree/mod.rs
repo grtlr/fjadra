@@ -29,14 +29,11 @@ impl<T> LeafEntry<T> {
     fn insert(&mut self, data: T) {
         let mut node = self;
         loop {
-            match node.next {
-                Some(ref mut next) => {
-                    node = next;
-                }
-                None => {
-                    node.next = Some(Box::new(LeafEntry::new(data)));
-                    return;
-                }
+            if let Some(ref mut next) = node.next {
+                node = next;
+            } else {
+                node.next = Some(Box::new(Self::new(data)));
+                return;
             }
         }
     }
@@ -79,16 +76,16 @@ impl<Q, T> Node<Q, T> {
     #[cfg(test)]
     fn leaf(&self) -> Option<&LeafEntry<T>> {
         match self {
-            Node::Leaf { data, .. } => Some(data),
+            Self::Leaf { data, .. } => Some(data),
             _ => None,
         }
     }
 
     #[cfg(test)]
-    fn children(&self) -> Option<[Option<&Node<Q, T>>; 4]> {
+    fn children(&self) -> Option<[Option<&Self>; 4]> {
         match self {
-            Node::Leaf { .. } => None,
-            Node::Internal { children, .. } => Some([
+            Self::Leaf { .. } => None,
+            Self::Internal { children, .. } => Some([
                 children[0].as_deref(),
                 children[1].as_deref(),
                 children[2].as_deref(),
@@ -99,8 +96,7 @@ impl<Q, T> Node<Q, T> {
 
     fn handle(&self) -> Handle<Q> {
         match self {
-            Node::Leaf { handle, .. } => *handle,
-            Node::Internal { handle, .. } => *handle,
+            Self::Leaf { handle, .. } | Self::Internal { handle, .. } => *handle,
         }
     }
 }
@@ -149,7 +145,7 @@ impl<Q: Default, T> Quadtree<Q, T> {
     }
 
     fn root(&self) -> Option<&Node<Q, T>> {
-        self.root.as_ref().map(|node| &**node)
+        self.root.as_deref()
     }
 }
 

@@ -12,17 +12,17 @@ pub enum Visit {
 impl Visit {
     pub fn continue_if(condition: bool) -> Self {
         if condition {
-            Visit::Continue
+            Self::Continue
         } else {
-            Visit::Skip
+            Self::Skip
         }
     }
 
     pub fn stop_if(condition: bool) -> Self {
         if condition {
-            Visit::Skip
+            Self::Skip
         } else {
-            Visit::Continue
+            Self::Continue
         }
     }
 }
@@ -98,7 +98,7 @@ mod test {
                 [0., 1., 1., 2.],
                 [1., 1., 2., 2.]
             ]
-        )
+        );
     }
 
     #[test]
@@ -125,7 +125,7 @@ mod test {
                 [-1.0, 0.0, 0.0, 1.0],
                 [0.0, 0.0, 1.0, 1.0]
             ]
-        )
+        );
     }
 
     #[test]

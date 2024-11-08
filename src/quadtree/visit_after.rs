@@ -65,7 +65,7 @@ impl<Q: Default, T> Quadtree<Q, T> {
 
 #[cfg(test)]
 mod test {
-    use crate::{lcg::LCG, quadtree::quad::Entry};
+    use crate::{lcg::Lcg, quadtree::quad::Entry};
 
     type Quadtree = super::Quadtree<(), ()>;
 
@@ -92,7 +92,7 @@ mod test {
                 [1., 1., 2., 2.],
                 [0., 0., 2., 2.],
             ]
-        )
+        );
     }
 
     #[test]
@@ -144,7 +144,7 @@ mod test {
         let mut q = super::Quadtree::<usize>::default();
 
         let n: usize = 20;
-        let mut random = LCG::new(1);
+        let mut random = Lcg::new(1);
 
         for _ in 0..n {
             let (x, y) = (random.next().unwrap(), random.next().unwrap());

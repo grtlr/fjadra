@@ -15,7 +15,7 @@ impl From<Extent> for [[f64; 2]; 2] {
 
 impl From<[[f64; 2]; 2]> for Extent {
     fn from(extent: [[f64; 2]; 2]) -> Self {
-        Extent {
+        Self {
             x0: extent[0][0],
             y0: extent[0][1],
             x1: extent[1][0],
@@ -26,7 +26,7 @@ impl From<[[f64; 2]; 2]> for Extent {
 
 impl From<[f64; 4]> for Extent {
     fn from(extent: [f64; 4]) -> Self {
-        Extent {
+        Self {
             x0: extent[0],
             y0: extent[1],
             x1: extent[2],

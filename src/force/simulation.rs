@@ -1,6 +1,6 @@
 use std::collections::BTreeMap;
 
-use crate::lcg::LCG;
+use crate::lcg::Lcg;
 
 use super::center::CenterForce;
 use super::position::{PositionXForce, PositionYForce};
@@ -26,7 +26,7 @@ pub struct SimulationBuilder {
     alpha_decay: f64,
     alpha_target: f64,
     velocity_decay: f64,
-    random: LCG,
+    random: Lcg,
 }
 
 impl Default for SimulationBuilder {
@@ -38,7 +38,7 @@ impl Default for SimulationBuilder {
             alpha_decay: 1.0 - alpha_min.powf(1.0 / 300.0),
             alpha_target: 0.0,
             velocity_decay: 0.6,
-            random: LCG::default(),
+            random: Lcg::default(),
         }
     }
 }
@@ -73,7 +73,7 @@ impl SimulationBuilder {
         self
     }
 
-    pub fn with_random(mut self, random: LCG) -> Self {
+    pub fn with_random(mut self, random: Lcg) -> Self {
         self.random = random;
         self
     }
@@ -117,7 +117,7 @@ pub struct Simulation {
     alpha_decay: f64,
     alpha_target: f64,
     velocity_decay: f64,
-    random: LCG,
+    random: Lcg,
     forces: BTreeMap<String, Force>,
     particles: Vec<Particle>,
 }
@@ -170,7 +170,7 @@ impl Simulation {
                     Force::PositionY(p) => p.force(self.alpha, &mut self.particles),
                     Force::Link(l) => l.force(self.alpha, &mut self.random, &mut self.particles),
                     Force::ManyBody(m) => {
-                        m.force(self.alpha, &mut self.random, &mut self.particles)
+                        m.force(self.alpha, &mut self.random, &mut self.particles);
                     }
                 }
             }

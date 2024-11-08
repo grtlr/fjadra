@@ -1,5 +1,5 @@
 use crate::{
-    lcg::LCG,
+    lcg::Lcg,
     quadtree::{Entry, Quad, Quadtree, Visit},
 };
 
@@ -22,7 +22,7 @@ where
     F: Fn(NodeIndex, usize) -> f64 + 'static,
 {
     fn from(f: F) -> Self {
-        NodeFn(Box::new(f))
+        Self(Box::new(f))
     }
 }
 
@@ -87,7 +87,7 @@ struct Charge {
 }
 
 impl ManyBodyForce {
-    pub fn force(&mut self, alpha: f64, random: &mut LCG, particles: &mut [Particle]) {
+    pub fn force(&self, alpha: f64, random: &mut Lcg, particles: &mut [Particle]) {
         let accumulate = |mut quad: Quad<'_, Charge, NodeIndex>| match quad.inner() {
             Entry::Leaf { data, others, x, y } => {
                 let strength = self.strengths[usize::from(*data)]
@@ -189,7 +189,7 @@ impl ManyBodyForce {
         );
         tree.visit_after(accumulate);
 
-        let tmp = (&*particles)
+        let tmp = particles
             .iter()
             .map(|node| (node.index))
             .collect::<Vec<_>>();

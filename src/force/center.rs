@@ -59,7 +59,7 @@ pub struct CenterForce {
 }
 
 impl CenterForce {
-    pub fn force(&mut self, particles: &mut [Particle]) {
+    pub fn force(&self, particles: &mut [Particle]) {
         let mut sx = 0.;
         let mut sy = 0.;
 

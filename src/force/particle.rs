@@ -13,7 +13,7 @@ impl From<NodeIndex> for usize {
 
 impl From<usize> for NodeIndex {
     fn from(index: usize) -> Self {
-        NodeIndex(index)
+        Self(index)
     }
 }
 

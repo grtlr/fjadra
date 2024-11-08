@@ -1,6 +1,6 @@
 use crate::{
     force::particle::NodeIndex,
-    lcg::LCG,
+    lcg::Lcg,
     quadtree::{Entry, Quad, Quadtree, Visit},
 };
 
@@ -66,7 +66,7 @@ pub struct CollideForce {
 }
 
 impl CollideForce {
-    pub fn force(&mut self, random: &mut LCG, particles: &mut [Particle]) {
+    pub fn force(&self, random: &mut Lcg, particles: &mut [Particle]) {
         let iterations = self.iterations;
 
         let prepare = |mut quad: Quad<'_, f64, NodeIndex>| match quad.inner() {
@@ -134,16 +134,16 @@ impl CollideForce {
                     }
                 }
             }
-            return Visit::Continue;
+            Visit::Continue
         };
 
         for _ in 0..iterations {
             // TODO(grtlr): get rid of this!
-            let tmp = (&*particles)
+            let tmp = particles
                 .iter()
                 .map(|node| (node.x, node.y, node.index))
                 .collect::<Vec<_>>();
-            let mut tree = Quadtree::<f64, NodeIndex>::from_particles(tmp.iter().cloned());
+            let mut tree = Quadtree::<f64, NodeIndex>::from_particles(tmp.iter().copied());
             tree.visit_after(prepare);
 
             for (xi, yi, index) in tmp {

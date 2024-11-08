@@ -1,6 +1,6 @@
 use std::cmp;
 
-use crate::lcg::LCG;
+use crate::lcg::Lcg;
 
 use super::{
     jiggle::jiggle,
@@ -9,6 +9,8 @@ use super::{
     ForceBuilder,
 };
 
+// `allow`: We introduce the wrapper type because of the complexity.
+#[allow(clippy::type_complexity)]
 pub struct LinkFn(Box<dyn Fn(&(NodeIndex, NodeIndex), usize) -> f64>);
 
 impl From<f64> for LinkFn {
@@ -22,7 +24,7 @@ where
     F: Fn(&(NodeIndex, NodeIndex), usize) -> f64 + 'static,
 {
     fn from(f: F) -> Self {
-        LinkFn(Box::new(f))
+        Self(Box::new(f))
     }
 }
 
@@ -139,7 +141,7 @@ fn get_pair_mut(
 }
 
 impl LinkForce {
-    pub fn force(&mut self, alpha: f64, random: &mut LCG, particles: &mut [Particle]) {
+    pub fn force(&self, alpha: f64, random: &mut Lcg, particles: &mut [Particle]) {
         for _ in 0..self.iterations {
             for (i, link) in self.links.iter().enumerate() {
                 let (source, target) = link;

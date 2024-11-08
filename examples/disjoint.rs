@@ -10,7 +10,7 @@ fn main() -> anyhow::Result<()> {
     let rec = rerun::RecordingStreamBuilder::new("fjadra_disjoint").spawn()?;
 
     let nodes = (0..NUM_NODES)
-        .map(|i| (format!("node{}", i), None))
+        .map(|i| (format!("node{i}"), None))
         .collect::<Vec<(_, Option<[f64; 2]>)>>();
 
     let mut simulation = SimulationBuilder::default()

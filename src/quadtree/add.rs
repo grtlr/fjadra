@@ -200,7 +200,7 @@ mod test {
     fn handles_points_being_to_the_left_of_quadtree_bounds() {
         let mut q = Quadtree::with_extent([0., 0.], [2., 2.]);
         q.insert_default(-1., 1.);
-        assert_eq!(dbg!(q).extent(), ([-4, 0], [4, 8]));
+        assert_eq!(q.extent(), ([-4, 0], [4, 8]));
     }
 
     #[test]
@@ -252,7 +252,7 @@ mod test {
                 .iter()
                 .collect::<Vec<_>>(),
             vec![&(), &()],
-        )
+        );
     }
 
     #[test]

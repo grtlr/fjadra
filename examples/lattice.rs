@@ -61,7 +61,7 @@ fn main() -> anyhow::Result<()> {
             &GraphNodes::new(nodes.iter().map(|key| key.to_string()))
                 .with_positions(positions.into_iter().map(|[x, y]| [x as f32, y as f32]))
                 .with_colors(colors.clone())
-                .with_labels(coordinates.clone().map(|(x, y)| format!("({}, {})", x, y))),
+                .with_labels(coordinates.clone().map(|(x, y)| format!("({x}, {y})"))),
         )?;
     }
 
