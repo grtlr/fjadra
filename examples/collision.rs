@@ -1,33 +1,23 @@
 use rand_distr::{Distribution, Weibull};
 
 use fjadra::{Collide, ManyBody, PositionX, PositionY, SimulationBuilder};
-use rerun::{Color, GraphNodes};
+use rerun as rr;
+
+mod scale_chromatic;
+use scale_chromatic::{Color, ScaleOrdinal, SchemeCategory10};
 
 const NUM_NODES: usize = 10;
 const SHAPE: f32 = 1.5;
 const SCALE: f32 = 20.0;
 
 fn main() -> anyhow::Result<()> {
-    let rec = rerun::RecordingStreamBuilder::new("fjadra_collision").spawn()?;
+    let rec = rr::RecordingStreamBuilder::new("fjadra_collision").spawn()?;
 
-    let brewer_colors = [
-        (166, 206, 227),
-        (31, 120, 180),
-        (178, 223, 138),
-        (51, 160, 44),
-        (251, 154, 153),
-        (227, 26, 28),
-        (253, 191, 111),
-        (255, 127, 0),
-        (202, 178, 214),
-        (106, 61, 154),
-    ];
-
-    let colors = brewer_colors
+    let colors = ScaleOrdinal::from(SchemeCategory10)
         .iter()
         .cycle()
         .take(NUM_NODES)
-        .map(|&(r, g, b)| Color::from_rgb(r, g, b))
+        .map(|Color { r, g, b }| rr::Color::from_rgb(r, g, b))
         .collect::<Vec<_>>();
 
     // Create a Weibull distribution with the specified shape and scale
@@ -59,7 +49,7 @@ fn main() -> anyhow::Result<()> {
 
         rec.log(
             "/collision",
-            &GraphNodes::new(ids.clone())
+            &rr::GraphNodes::new(ids.clone())
                 .with_positions(simulation.positions().map(|[x, y]| [x as f32, y as f32]))
                 .with_radii(radii.clone())
                 .with_colors(colors.clone()),
@@ -69,7 +59,7 @@ fn main() -> anyhow::Result<()> {
     // We log one final time after the layout is finished
     rec.log(
         "/collision",
-        &GraphNodes::new(ids)
+        &rr::GraphNodes::new(ids)
             .with_positions(simulation.positions().map(|[x, y]| [x as f32, y as f32]))
             .with_radii(radii)
             .with_colors(colors),
