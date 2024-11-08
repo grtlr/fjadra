@@ -1,5 +1,4 @@
 use std::cmp;
-use std::collections::HashMap;
 
 use crate::lcg::LCG;
 
@@ -62,22 +61,23 @@ impl Link {
 
 impl ForceBuilder for Link {
     fn initialize(mut self, _particles: &[Particle]) -> Force {
-        // TODO(grtlr): This is in array d3.
-        let mut count = HashMap::new();
-        for link in &self.links {
-            *count.entry(link.0.clone()).or_insert(0) += 1;
-            *count.entry(link.1.clone()).or_insert(0) += 1;
+        let mut count = vec![0; _particles.len()];
+        for &(source, target) in &self.links {
+            count[usize::from(source)] += 1;
+            count[usize::from(target)] += 1;
         }
 
         let bias = self
             .links
             .iter()
-            .cloned()
-            .map(|link| count[&link.0] as f64 / (count[&link.0] + count[&link.1]) as f64)
+            .map(|&(source, target)| {
+                count[usize::from(source)] as f64
+                    / (count[usize::from(source)] + count[usize::from(target)]) as f64
+            })
             .collect();
 
-        let default_strength = LinkFn::from(move |link: &(NodeIndex, NodeIndex), _| {
-            1.0 / usize::min(count[&link.0], count[&link.1]) as f64
+        let default_strength = LinkFn::from(move |&(u, v): &(NodeIndex, NodeIndex), _| {
+            1.0 / usize::min(count[usize::from(u)], count[usize::from(v)]) as f64
         });
 
         let strength = self.strength_fn.take().unwrap_or(default_strength);
