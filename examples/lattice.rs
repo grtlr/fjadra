@@ -45,28 +45,7 @@ fn main() -> anyhow::Result<()> {
         )
         .add_force("charge", ManyBody::new().strength(-70.0));
 
-    while !simulation.finished() {
-        simulation.tick(3);
-
-        rec.log(
-            "/lattice",
-            &GraphNodes::new(nodes.iter().map(|key| key.to_string()))
-                .with_positions(simulation.positions().map(|[x, y]| [x as f32, y as f32]))
-                .with_colors(colors.clone())
-                .with_labels(coordinates.clone().map(|(x, y)| format!("({}, {})", x, y))),
-        )?;
-    }
-
-    // We log one final time after the layout is finished
-    rec.log(
-        "/lattice",
-        &GraphNodes::new(nodes.iter().map(|key| key.to_string()))
-            .with_positions(simulation.positions().map(|[x, y]| [x as f32, y as f32]))
-            .with_colors(colors)
-            .with_labels(coordinates.clone().map(|(x, y)| format!("({}, {})", x, y))),
-    )?;
-
-    rec.log(
+    rec.log_static(
         "/lattice",
         &GraphEdges::new(
             edges
@@ -75,6 +54,16 @@ fn main() -> anyhow::Result<()> {
         )
         .with_graph_type(GraphType::Directed),
     )?;
+
+    for positions in simulation.iter() {
+        rec.log(
+            "/lattice",
+            &GraphNodes::new(nodes.iter().map(|key| key.to_string()))
+                .with_positions(positions.into_iter().map(|[x, y]| [x as f32, y as f32]))
+                .with_colors(colors.clone())
+                .with_labels(coordinates.clone().map(|(x, y)| format!("({}, {})", x, y))),
+        )?;
+    }
 
     Ok(())
 }

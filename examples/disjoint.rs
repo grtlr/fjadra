@@ -21,24 +21,13 @@ fn main() -> anyhow::Result<()> {
         .add_force("x", PositionX::new())
         .add_force("y", PositionY::new());
 
-    while !simulation.finished() {
-        simulation.tick(3);
-
-        let nodes = nodes.iter().map(|(key, _)| key.clone()).collect::<Vec<_>>();
+    for positions in simulation.iter() {
         rec.log(
             "/nodes",
-            &GraphNodes::new(nodes)
-                .with_positions(simulation.positions().map(|[x, y]| [x as f32, y as f32])),
+            &GraphNodes::new(nodes.iter().map(|(key, _)| key.clone()))
+                .with_positions(positions.into_iter().map(|[x, y]| [x as f32, y as f32])),
         )?;
     }
-
-    // We log one final time after the layout is finished.
-    let nodes = nodes.iter().map(|(key, _)| key.clone()).collect::<Vec<_>>();
-    rec.log(
-        "/nodes",
-        &GraphNodes::new(nodes)
-            .with_positions(simulation.positions().map(|[x, y]| [x as f32, y as f32])),
-    )?;
 
     Ok(())
 }
