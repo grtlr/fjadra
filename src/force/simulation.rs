@@ -225,6 +225,7 @@ mod test {
                 Node::default().fixed_position(100.0, 100.0),
                 Node::default().fixed_position(-100.0, -100.0),
                 Node::default().position(42.0, 42.0),
+                Node::default(),
             ])
             // The following should normally pull these nodes to (0,0).
             .add_force("x", PositionX::default())
@@ -239,5 +240,8 @@ mod test {
 
         approx::assert_abs_diff_eq!(positions[2][0], 0.0, epsilon = 0.0001);
         approx::assert_abs_diff_eq!(positions[2][1], 0.0, epsilon = 0.0001);
+
+        approx::assert_abs_diff_eq!(positions[3][0], 0.0, epsilon = 0.0001);
+        approx::assert_abs_diff_eq!(positions[3][1], 0.0, epsilon = 0.0001);
     }
 }
