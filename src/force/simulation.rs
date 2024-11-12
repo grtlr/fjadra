@@ -211,3 +211,33 @@ impl Simulation {
         }
     }
 }
+
+#[cfg(test)]
+mod test {
+    use crate::{PositionX, PositionY};
+
+    use super::*;
+
+    #[test]
+    fn respects_fixed_positions() {
+        let mut simulation = SimulationBuilder::default()
+            .build([
+                Node::default().fixed_position(100.0, 100.0),
+                Node::default().fixed_position(-100.0, -100.0),
+                Node::default().position(42.0, 42.0),
+            ])
+            // The following should normally pull these nodes to (0,0).
+            .add_force("x", PositionX::default())
+            .add_force("y", PositionY::default());
+
+        let positions = simulation.iter().last().unwrap();
+
+        assert_eq!(positions[0][0], 100.0);
+        assert_eq!(positions[0][1], 100.0);
+        assert_eq!(positions[1][0], -100.0);
+        assert_eq!(positions[1][1], -100.0);
+
+        approx::assert_abs_diff_eq!(positions[2][0], 0.0, epsilon = 0.0001);
+        approx::assert_abs_diff_eq!(positions[2][1], 0.0, epsilon = 0.0001);
+    }
+}
