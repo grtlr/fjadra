@@ -19,7 +19,7 @@ pub mod miserables {
 
     impl Graph {
         pub fn load() -> anyhow::Result<Self> {
-            let file = std::fs::File::open("miserables.json")?;
+            let file = std::fs::File::open("data/miserables.json")?;
             Ok(serde_json::from_reader(file)?)
         }
     }
