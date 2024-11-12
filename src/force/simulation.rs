@@ -3,6 +3,7 @@ use std::collections::BTreeMap;
 use crate::lcg::Lcg;
 
 use super::center::CenterForce;
+use super::node::Node;
 use super::position::{PositionXForce, PositionYForce};
 use super::{collide::CollideForce, link::LinkForce, many_body::ManyBodyForce, particle::Particle};
 
@@ -79,24 +80,26 @@ impl SimulationBuilder {
     }
 }
 
+/// Creates the initial position of particles.
+fn initial_position(index: usize) -> [f64; 2] {
+    let initial_radius = 10.0;
+    let initial_angle = std::f64::consts::PI * (3.0 - (5.0f64).sqrt());
+
+    let radius = initial_radius * (0.5 + index as f64).sqrt();
+    let angle = index as f64 * initial_angle;
+    [radius * angle.cos(), radius * angle.sin()]
+}
+
 impl SimulationBuilder {
-    // TODO(grtlr): build with fixed positions!
-
-    pub fn build<P>(&self, particles: impl IntoIterator<Item = Option<P>>) -> Simulation
+    pub fn build<N>(&self, particles: impl IntoIterator<Item = N>) -> Simulation
     where
-        P: Into<[f64; 2]>,
+        N: Into<Node>,
     {
-        let initial_radius = 10.0;
-        let initial_angle = std::f64::consts::PI * (3.0 - (5.0f64).sqrt());
-
-        let particles = particles.into_iter().enumerate().map(|(ix, p)| {
-            let [x, y] = p.map(|x| x.into()).unwrap_or_else(|| {
-                let radius = initial_radius * (0.5 + ix as f64).sqrt();
-                let angle = ix as f64 * initial_angle;
-                [radius * angle.cos(), radius * angle.sin()]
-            });
-            Particle::new(ix, x, y)
-        });
+        let particles = particles
+            .into_iter()
+            .enumerate()
+            .map(|(ix, p)| p.into().build_with_pos(ix.into(), || initial_position(ix)))
+            .collect();
 
         Simulation {
             alpha: self.alpha,
@@ -104,7 +107,7 @@ impl SimulationBuilder {
             alpha_decay: self.alpha_decay,
             alpha_target: self.alpha_target,
             velocity_decay: self.velocity_decay,
-            particles: particles.collect(),
+            particles,
             random: self.random.clone(),
             forces: Default::default(),
         }

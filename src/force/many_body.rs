@@ -5,11 +5,11 @@ use crate::{
 
 use super::{
     jiggle::jiggle,
-    particle::{NodeIndex, Particle},
+    particle::{Particle, ParticleIndex},
     simulation::{Force, ForceBuilder},
 };
 
-pub struct NodeFn(Box<dyn Fn(NodeIndex, usize) -> f64>);
+pub struct NodeFn(Box<dyn Fn(ParticleIndex, usize) -> f64>);
 
 impl From<f64> for NodeFn {
     fn from(value: f64) -> Self {
@@ -19,7 +19,7 @@ impl From<f64> for NodeFn {
 
 impl<F> From<F> for NodeFn
 where
-    F: Fn(NodeIndex, usize) -> f64 + 'static,
+    F: Fn(ParticleIndex, usize) -> f64 + 'static,
 {
     fn from(f: F) -> Self {
         Self(Box::new(f))
@@ -88,7 +88,7 @@ struct Charge {
 
 impl ManyBodyForce {
     pub fn force(&self, alpha: f64, random: &mut Lcg, particles: &mut [Particle]) {
-        let accumulate = |mut quad: Quad<'_, Charge, NodeIndex>| match quad.inner() {
+        let accumulate = |mut quad: Quad<'_, Charge, ParticleIndex>| match quad.inner() {
             Entry::Leaf { data, others, x, y } => {
                 let strength = self.strengths[usize::from(*data)]
                     + others
@@ -118,9 +118,9 @@ impl ManyBodyForce {
             }
         };
 
-        let mut apply = |index: NodeIndex,
+        let mut apply = |index: ParticleIndex,
                          particles: &mut [Particle],
-                         quad: Quad<'_, Charge, NodeIndex>|
+                         quad: Quad<'_, Charge, ParticleIndex>|
          -> Visit {
             let node = &mut particles[usize::from(index)];
             let mut x = quad.value().x - node.x;
@@ -184,7 +184,7 @@ impl ManyBodyForce {
             Visit::Continue
         };
 
-        let mut tree = Quadtree::<Charge, NodeIndex>::from_particles(
+        let mut tree = Quadtree::<Charge, ParticleIndex>::from_particles(
             particles.iter().map(|n| (n.x, n.y, n.index)),
         );
         tree.visit_after(accumulate);

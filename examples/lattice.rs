@@ -1,6 +1,9 @@
 use itertools::Itertools;
 
-use fjadra::force::{Link, ManyBody, SimulationBuilder};
+use fjadra::{
+    force::{Link, ManyBody, SimulationBuilder},
+    Node,
+};
 use rerun::{components::GraphType, Color, GraphEdges, GraphNodes};
 
 const NUM_NODES: usize = 10;
@@ -35,7 +38,7 @@ fn main() -> anyhow::Result<()> {
     }
 
     let mut simulation = SimulationBuilder::default()
-        .build(nodes.iter().map(|_| Option::<[f64; 2]>::None))
+        .build(nodes.iter().map(|_| Node::default()))
         .add_force(
             "link",
             Link::new(edges.clone().into_iter())

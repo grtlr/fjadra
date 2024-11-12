@@ -2,7 +2,7 @@ use crate::extent::Extent;
 
 use super::{store::Store, Node};
 
-pub struct QuadInner<'a, Q, T> {
+pub(super) struct QuadInner<'a, Q, T> {
     pub extent: Extent,
     pub node: &'a Node<Q, T>,
 }
@@ -31,7 +31,7 @@ pub enum Entry<'a, T, Q> {
 pub struct Quad<'a, Q, T>(&'a mut Store<Q>, &'a QuadInner<'a, Q, T>);
 
 impl<'a, Q, T> Quad<'a, Q, T> {
-    pub fn from_quad(store: &'a mut Store<Q>, quad: &'a QuadInner<'a, Q, T>) -> Self {
+    pub(super) fn from_quad(store: &'a mut Store<Q>, quad: &'a QuadInner<'a, Q, T>) -> Self {
         Self(store, quad)
     }
 

@@ -4,14 +4,14 @@ use crate::lcg::Lcg;
 
 use super::{
     jiggle::jiggle,
-    particle::{NodeIndex, Particle},
+    particle::{Particle, ParticleIndex},
     simulation::Force,
     ForceBuilder,
 };
 
 // `allow`: We introduce the wrapper type because of the complexity.
 #[allow(clippy::type_complexity)]
-pub struct LinkFn(Box<dyn Fn(&(NodeIndex, NodeIndex), usize) -> f64>);
+pub struct LinkFn(Box<dyn Fn(&(ParticleIndex, ParticleIndex), usize) -> f64>);
 
 impl From<f64> for LinkFn {
     fn from(value: f64) -> Self {
@@ -21,7 +21,7 @@ impl From<f64> for LinkFn {
 
 impl<F> From<F> for LinkFn
 where
-    F: Fn(&(NodeIndex, NodeIndex), usize) -> f64 + 'static,
+    F: Fn(&(ParticleIndex, ParticleIndex), usize) -> f64 + 'static,
 {
     fn from(f: F) -> Self {
         Self(Box::new(f))
@@ -29,7 +29,7 @@ where
 }
 
 pub struct Link {
-    links: Vec<(NodeIndex, NodeIndex)>,
+    links: Vec<(ParticleIndex, ParticleIndex)>,
     strength_fn: Option<LinkFn>,
     distance_fn: LinkFn,
     iterations: usize,
@@ -78,7 +78,7 @@ impl ForceBuilder for Link {
             })
             .collect();
 
-        let default_strength = LinkFn::from(move |&(u, v): &(NodeIndex, NodeIndex), _| {
+        let default_strength = LinkFn::from(move |&(u, v): &(ParticleIndex, ParticleIndex), _| {
             1.0 / usize::min(count[usize::from(u)], count[usize::from(v)]) as f64
         });
 
@@ -110,7 +110,7 @@ impl ForceBuilder for Link {
 
 #[derive(Debug)]
 pub struct LinkForce {
-    links: Vec<(NodeIndex, NodeIndex)>,
+    links: Vec<(ParticleIndex, ParticleIndex)>,
 
     bias: Vec<f64>,
 
@@ -121,8 +121,8 @@ pub struct LinkForce {
 
 fn get_pair_mut(
     slice: &mut [Particle],
-    i: NodeIndex,
-    j: NodeIndex,
+    i: ParticleIndex,
+    j: ParticleIndex,
 ) -> Option<(&mut Particle, &mut Particle)> {
     if i == j {
         return None;

@@ -1,6 +1,6 @@
 use fjadra::{
     force::{Collide, SimulationBuilder},
-    PositionX, PositionY,
+    Node, PositionX, PositionY,
 };
 use rerun::GraphNodes;
 
@@ -10,8 +10,8 @@ fn main() -> anyhow::Result<()> {
     let rec = rerun::RecordingStreamBuilder::new("fjadra_disjoint").spawn()?;
 
     let nodes = (0..NUM_NODES)
-        .map(|i| (format!("node{i}"), None))
-        .collect::<Vec<(_, Option<[f64; 2]>)>>();
+        .map(|i| (format!("node{i}"), Node::default()))
+        .collect::<Vec<(_, _)>>();
 
     let mut simulation = SimulationBuilder::default()
         // .with_alpha_target(0.3)

@@ -1,6 +1,6 @@
 use rand_distr::{Distribution, Weibull};
 
-use fjadra::{Collide, ManyBody, PositionX, PositionY, SimulationBuilder};
+use fjadra::{Collide, ManyBody, Node, PositionX, PositionY, SimulationBuilder};
 use rerun as rr;
 
 mod scale_chromatic;
@@ -35,7 +35,7 @@ fn main() -> anyhow::Result<()> {
 
     let mut simulation = SimulationBuilder::default()
         .with_velocity_decay(0.1)
-        .build(ids.iter().map(|_| Option::<[f64; 2]>::None))
+        .build(ids.iter().map(|_| Node::default()))
         .add_force("x", PositionX::new().strength(0.1))
         .add_force("y", PositionY::new().strength(0.1))
         .add_force(

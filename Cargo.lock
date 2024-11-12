@@ -2087,10 +2087,23 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "criterion",
+ "fjadra_data",
  "itertools 0.13.0",
  "rand",
  "rand_distr",
  "rerun",
+]
+
+[[package]]
+name = "fjadra"
+version = "0.1.0"
+source = "git+https://github.com/grtlr/fjadra.git#40027d0c4d83096142509cb54b349313643de5e4"
+
+[[package]]
+name = "fjadra_data"
+version = "0.0.0"
+dependencies = [
+ "anyhow",
  "serde",
  "serde_json",
 ]
@@ -4917,9 +4930,11 @@ version = "0.20.0-alpha.1+dev"
 dependencies = [
  "ahash",
  "egui",
+ "fjadra 0.1.0 (git+https://github.com/grtlr/fjadra.git)",
  "nohash-hasher",
  "re_chunk",
  "re_format",
+ "re_log",
  "re_log_types",
  "re_query",
  "re_renderer",

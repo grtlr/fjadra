@@ -58,7 +58,7 @@ impl<'a, T> Iterator for LeafListIterator<'a, T> {
 }
 
 #[derive(Clone, Debug, PartialEq)]
-pub enum Node<Q, T> {
+pub(super) enum Node<Q, T> {
     Leaf {
         x: f64,
         y: f64,

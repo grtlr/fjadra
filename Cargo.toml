@@ -13,6 +13,9 @@ path = "src/lib.rs"
 name = "miserables"
 harness = false
 
+[workspace]
+members = ["data"]
+
 [dev-dependencies]
 anyhow = "1.0.92"
 criterion = { version = "0.5.1", features = ["html_reports"] }
@@ -20,8 +23,7 @@ itertools = "0.13.0"
 rand = "0.8.5"
 rand_distr = "0.4.3"
 rerun = { path = "../rerun/crates/top/rerun" }
-serde = { version = "1.0.214", features = ["derive"] }
-serde_json = "1.0.132"
+fjadra_data = { path = "data" }
 
 [lints.rust]
 unsafe_code = "deny"

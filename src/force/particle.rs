@@ -3,15 +3,15 @@ use std::hash::Hash;
 /// Reflects the index in the input list of particles.
 #[derive(Debug, Clone, Copy, PartialOrd, Ord, PartialEq, Eq, Hash)]
 #[repr(transparent)]
-pub struct NodeIndex(usize);
+pub struct ParticleIndex(usize);
 
-impl From<NodeIndex> for usize {
-    fn from(index: NodeIndex) -> Self {
+impl From<ParticleIndex> for usize {
+    fn from(index: ParticleIndex) -> Self {
         index.0
     }
 }
 
-impl From<usize> for NodeIndex {
+impl From<usize> for ParticleIndex {
     fn from(index: usize) -> Self {
         Self(index)
     }
@@ -23,7 +23,7 @@ pub struct Particle {
     pub y: f64,
     pub vx: f64,
     pub vy: f64,
-    pub index: NodeIndex,
+    pub index: ParticleIndex,
     // The following fields signal that a node is fixed in a certain direction.
     // TODO(grtlr): Move this to a separate `Vec` in the simulation to improve the memory layout.
     pub fx: Option<f64>,
@@ -31,7 +31,7 @@ pub struct Particle {
 }
 
 impl Particle {
-    pub fn new(index: impl Into<NodeIndex>, x: f64, y: f64) -> Self {
+    pub fn new(index: impl Into<ParticleIndex>, x: f64, y: f64) -> Self {
         Self {
             x,
             y,
@@ -70,20 +70,5 @@ impl Particle {
             self.y += self.vy;
             self.vy *= velocity_decay;
         }
-    }
-}
-
-impl From<Particle> for [f64; 2] {
-    fn from(p: Particle) -> Self {
-        [p.x, p.y]
-    }
-}
-
-impl<I> From<(I, [f64; 2])> for Particle
-where
-    I: Into<NodeIndex>,
-{
-    fn from((ix, p): (I, [f64; 2])) -> Self {
-        Self::new(ix.into(), p[0], p[1])
     }
 }

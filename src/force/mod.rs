@@ -3,10 +3,12 @@ mod collide;
 mod jiggle;
 mod link;
 mod many_body;
+mod node;
 mod particle;
 mod position;
 mod simulation;
 
+pub use node::Node;
 pub use simulation::{ForceBuilder, Simulation, SimulationBuilder};
 
 pub use center::Center;

@@ -1,5 +1,5 @@
 use crate::{
-    force::particle::NodeIndex,
+    force::particle::ParticleIndex,
     lcg::Lcg,
     quadtree::{Entry, Quad, Quadtree, Visit},
 };
@@ -69,7 +69,7 @@ impl CollideForce {
     pub fn force(&self, random: &mut Lcg, particles: &mut [Particle]) {
         let iterations = self.iterations;
 
-        let prepare = |mut quad: Quad<'_, f64, NodeIndex>| match quad.inner() {
+        let prepare = |mut quad: Quad<'_, f64, ParticleIndex>| match quad.inner() {
             Entry::Leaf { data, .. } => {
                 // We only look at the data from the first leaf.
                 *quad.value_mut() = self.radii[usize::from(*data)];
@@ -83,12 +83,12 @@ impl CollideForce {
             }
         };
 
-        let mut apply = |index: NodeIndex,
+        let mut apply = |index: ParticleIndex,
                          xi: f64,
                          yi: f64,
                          ri: f64,
                          particles: &mut [Particle],
-                         quad: Quad<'_, f64, NodeIndex>|
+                         quad: Quad<'_, f64, ParticleIndex>|
          -> Visit {
             let [x0, y0, x1, y1] = quad.extent().into();
             let rj = quad.value();
@@ -143,7 +143,7 @@ impl CollideForce {
                 .iter()
                 .map(|node| (node.x, node.y, node.index))
                 .collect::<Vec<_>>();
-            let mut tree = Quadtree::<f64, NodeIndex>::from_particles(tmp.iter().copied());
+            let mut tree = Quadtree::<f64, ParticleIndex>::from_particles(tmp.iter().copied());
             tree.visit_after(prepare);
 
             for (xi, yi, index) in tmp {
