@@ -184,6 +184,10 @@ impl Simulation {
         }
     }
 
+    pub fn forces(&self) -> impl Iterator<Item = &str> {
+        self.forces.keys().map(|k| k.as_str())
+    }
+
     pub fn positions(&self) -> impl Iterator<Item = [f64; 2]> + '_ {
         self.particles.iter().map(|n: &Particle| [n.x, n.y])
     }
