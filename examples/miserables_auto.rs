@@ -26,12 +26,9 @@ fn main() -> anyhow::Result<()> {
         .map(|Color { r, g, b }| rr::Color::from_rgb(r, g, b))
         .collect::<Vec<_>>();
 
-    let positions = simulation.iter().last().unwrap();
-
     rec.log_static(
         "/miserables",
         &rr::GraphNodes::new(graph.nodes.iter().map(|n| n.name.clone()))
-            .with_positions(positions.into_iter().map(|[x, y]| [x as f32, y as f32]))
             .with_colors(graph.nodes.iter().map(|n| colors[n.group])),
     )?;
 
