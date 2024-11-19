@@ -2107,7 +2107,7 @@ dependencies = [
 [[package]]
 name = "fjadra"
 version = "0.1.0"
-source = "git+https://github.com/grtlr/fjadra.git#65cb0203c0d234469a8cdb298dcf8cb1113f16a9"
+source = "git+https://github.com/grtlr/fjadra.git#9d59385cb05f44ffbb4e4fc157be75257c771176"
 
 [[package]]
 name = "fjadra_data"
