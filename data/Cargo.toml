@@ -1,6 +1,7 @@
 [package]
 name = "fjadra_data"
 publish = false
+edition = "2021"
 
 [lib]
 path = "src/lib.rs"

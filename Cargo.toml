@@ -5,6 +5,7 @@ authors = ["Jochen Görtler <me@jgoertler.com>"]
 license = "MIT OR Apache-2.0"
 version = "0.1.0"
 description = "Library for simulating physical forces on particles"
+rust-version = "1.80"
 
 [lib]
 path = "src/lib.rs"
@@ -22,7 +23,7 @@ criterion = { version = "0.5.1", features = ["html_reports"] }
 itertools = "0.13.0"
 rand = "0.8.5"
 rand_distr = "0.4.3"
-rerun = { path = "../rerun/crates/top/rerun" }
+rerun = { git = "https://github.com/rerun-io/rerun.git" }
 fjadra_data = { path = "data" }
 approx = "0.5.1"
 
