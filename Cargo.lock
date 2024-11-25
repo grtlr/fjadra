@@ -4253,7 +4253,7 @@ dependencies = [
 [[package]]
 name = "re_analytics"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "crossbeam",
  "directories",
@@ -4301,7 +4301,7 @@ dependencies = [
 [[package]]
 name = "re_blueprint_tree"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "egui",
  "itertools 0.13.0",
@@ -4321,7 +4321,7 @@ dependencies = [
 [[package]]
 name = "re_build_info"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "serde",
 ]
@@ -4329,7 +4329,7 @@ dependencies = [
 [[package]]
 name = "re_build_tools"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "anyhow",
  "cargo_metadata 0.18.1",
@@ -4343,7 +4343,7 @@ dependencies = [
 [[package]]
 name = "re_case"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "convert_case",
 ]
@@ -4351,7 +4351,7 @@ dependencies = [
 [[package]]
 name = "re_chunk"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "anyhow",
@@ -4379,7 +4379,7 @@ dependencies = [
 [[package]]
 name = "re_chunk_store"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "anyhow",
@@ -4404,7 +4404,7 @@ dependencies = [
 [[package]]
 name = "re_chunk_store_ui"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "egui",
  "egui_extras",
@@ -4420,7 +4420,7 @@ dependencies = [
 [[package]]
 name = "re_component_ui"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "egui",
  "egui_extras",
@@ -4438,7 +4438,7 @@ dependencies = [
 [[package]]
 name = "re_context_menu"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "egui",
  "egui_tiles",
@@ -4460,7 +4460,7 @@ dependencies = [
 [[package]]
 name = "re_crash_handler"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "backtrace",
  "econtext",
@@ -4474,7 +4474,7 @@ dependencies = [
 [[package]]
 name = "re_data_loader"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "anyhow",
@@ -4503,7 +4503,7 @@ dependencies = [
 [[package]]
 name = "re_data_source"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "anyhow",
  "itertools 0.13.0",
@@ -4521,7 +4521,7 @@ dependencies = [
 [[package]]
 name = "re_data_ui"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "anyhow",
@@ -4551,7 +4551,7 @@ dependencies = [
 [[package]]
 name = "re_dataframe"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "anyhow",
  "itertools 0.13.0",
@@ -4570,7 +4570,7 @@ dependencies = [
 [[package]]
 name = "re_entity_db"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "document-features",
@@ -4598,12 +4598,12 @@ dependencies = [
 [[package]]
 name = "re_error"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 
 [[package]]
 name = "re_format"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "num-traits",
 ]
@@ -4611,7 +4611,7 @@ dependencies = [
 [[package]]
 name = "re_format_arrow"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "comfy-table",
  "re_arrow2",
@@ -4622,7 +4622,7 @@ dependencies = [
 [[package]]
 name = "re_int_histogram"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "smallvec",
  "static_assertions",
@@ -4631,7 +4631,7 @@ dependencies = [
 [[package]]
 name = "re_log"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "env_logger",
  "js-sys",
@@ -4645,7 +4645,7 @@ dependencies = [
 [[package]]
 name = "re_log_encoding"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ehttp",
  "js-sys",
@@ -4668,7 +4668,7 @@ dependencies = [
 [[package]]
 name = "re_log_types"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "anyhow",
@@ -4716,7 +4716,7 @@ dependencies = [
 [[package]]
 name = "re_memory"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "backtrace",
@@ -4752,7 +4752,7 @@ dependencies = [
 [[package]]
 name = "re_query"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "anyhow",
@@ -4801,7 +4801,7 @@ dependencies = [
 [[package]]
 name = "re_renderer"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "anyhow",
@@ -4854,7 +4854,7 @@ dependencies = [
 [[package]]
 name = "re_sdk"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "crossbeam",
@@ -4882,7 +4882,7 @@ dependencies = [
 [[package]]
 name = "re_sdk_comms"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "crossbeam",
@@ -4899,7 +4899,7 @@ dependencies = [
 [[package]]
 name = "re_selection_panel"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "egui",
  "egui_tiles",
@@ -4927,7 +4927,7 @@ dependencies = [
 [[package]]
 name = "re_smart_channel"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "crossbeam",
  "parking_lot",
@@ -4939,7 +4939,7 @@ dependencies = [
 [[package]]
 name = "re_space_view"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "arrow",
@@ -4965,7 +4965,7 @@ dependencies = [
 [[package]]
 name = "re_space_view_bar_chart"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "egui",
  "egui_plot",
@@ -4984,7 +4984,7 @@ dependencies = [
 [[package]]
 name = "re_space_view_dataframe"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "anyhow",
  "egui",
@@ -5008,7 +5008,7 @@ dependencies = [
 [[package]]
 name = "re_space_view_graph"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "bytemuck",
@@ -5031,7 +5031,7 @@ dependencies = [
 [[package]]
 name = "re_space_view_spatial"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "anyhow",
@@ -5074,7 +5074,7 @@ dependencies = [
 [[package]]
 name = "re_space_view_tensor"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "anyhow",
  "bytemuck",
@@ -5099,7 +5099,7 @@ dependencies = [
 [[package]]
 name = "re_space_view_text_document"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "egui",
  "egui_commonmark",
@@ -5115,7 +5115,7 @@ dependencies = [
 [[package]]
 name = "re_space_view_text_log"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "egui",
  "egui_extras",
@@ -5136,7 +5136,7 @@ dependencies = [
 [[package]]
 name = "re_space_view_time_series"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "egui",
  "egui_plot",
@@ -5159,7 +5159,7 @@ dependencies = [
 [[package]]
 name = "re_string_interner"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "nohash-hasher",
@@ -5172,7 +5172,7 @@ dependencies = [
 [[package]]
 name = "re_time_panel"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "egui",
  "itertools 0.13.0",
@@ -5195,7 +5195,7 @@ dependencies = [
 [[package]]
 name = "re_tracing"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "puffin",
  "puffin_http",
@@ -5207,7 +5207,7 @@ dependencies = [
 [[package]]
 name = "re_tuid"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "document-features",
  "getrandom",
@@ -5219,7 +5219,7 @@ dependencies = [
 [[package]]
 name = "re_types"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "anyhow",
  "array-init",
@@ -5258,7 +5258,7 @@ dependencies = [
 [[package]]
 name = "re_types_blueprint"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "arrow",
  "once_cell",
@@ -5271,7 +5271,7 @@ dependencies = [
 [[package]]
 name = "re_types_builder"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "anyhow",
  "arrow",
@@ -5300,7 +5300,7 @@ dependencies = [
 [[package]]
 name = "re_types_core"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "anyhow",
  "arrow",
@@ -5325,7 +5325,7 @@ dependencies = [
 [[package]]
 name = "re_ui"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "eframe",
  "egui",
@@ -5350,7 +5350,7 @@ dependencies = [
 [[package]]
 name = "re_video"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "bit-vec 0.8.0",
  "cfg_aliases 0.2.1",
@@ -5376,7 +5376,7 @@ dependencies = [
 [[package]]
 name = "re_viewer"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "anyhow",
@@ -5453,7 +5453,7 @@ dependencies = [
 [[package]]
 name = "re_viewer_context"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "anyhow",
@@ -5508,7 +5508,7 @@ dependencies = [
 [[package]]
 name = "re_viewport"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "egui",
@@ -5535,7 +5535,7 @@ dependencies = [
 [[package]]
 name = "re_viewport_blueprint"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "ahash",
  "egui",
@@ -5563,7 +5563,7 @@ dependencies = [
 [[package]]
 name = "re_web_viewer_server"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "document-features",
  "re_analytics",
@@ -5575,7 +5575,7 @@ dependencies = [
 [[package]]
 name = "re_ws_comms"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "anyhow",
  "bincode",
@@ -5656,7 +5656,7 @@ checksum = "19b30a45b0cd0bcca8037f3d0dc3421eaf95327a17cad11964fb8179b4fc4832"
 [[package]]
 name = "rerun"
 version = "0.21.0-alpha.1+dev"
-source = "git+https://github.com/rerun-io/rerun.git#1202bd476c46977beaad17e75e890e56cd453329"
+source = "git+https://github.com/rerun-io/rerun.git?rev=fb034b0cf914436875aef740588ab35e3e55d563#fb034b0cf914436875aef740588ab35e3e55d563"
 dependencies = [
  "anyhow",
  "document-features",
