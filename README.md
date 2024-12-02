@@ -1,10 +1,21 @@
-# Fjädra
+# Fjädra 🪽
 
 A Library for simulating physical forces on particles, which was heavily inspired by [`d3-force`](https://d3js.org/d3-force).
 Its main use case is to layout graphs (i.e. node-link diagrams)—if you are looking for a pure physics engine, you might want to check out the excellent [Rapier](https://rapier.rs/) and [Parry](https://parry.rs/) from [Dimforge](`www.dimforge.com`).
 
-> [!NOTE]
+> [!WARNING]
 > This library is currently under development so the API is still likely to change.
+
+---
+
+<div align="center">
+<a href="https://www.rerun.io/"><img src="media/rerun_io_logo.png" width="250"></a>
+
+Development is sponsored by [Rerun](https://www.rerun.io/), a startup building<br>
+an SDK for visualizing streams of multimodal data.
+</div>
+
+---
 
 ## Design Goals
 
