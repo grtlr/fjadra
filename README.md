@@ -1,6 +1,6 @@
 # Fjädra 🪽
 
-A Library for simulating physical forces on particles, which was heavily inspired by [`d3-force`](https://d3js.org/d3-force).
+A library for simulating physical forces on particles, which was heavily inspired by [`d3-force`](https://d3js.org/d3-force).
 Its main use case is to layout graphs (i.e. node-link diagrams)—if you are looking for a pure physics engine, you might want to check out the excellent [Rapier](https://rapier.rs/) and [Parry](https://parry.rs/) from [Dimforge](`www.dimforge.com`).
 
 > [!WARNING]
