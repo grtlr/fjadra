@@ -144,7 +144,7 @@ impl<'a> Iterator for SimulationIter<'a> {
             return Some(self.simulation.positions().collect());
         } else {
             self.simulation.tick(1);
-            self.finished = self.simulation.finished();
+            self.finished = self.simulation.is_finished();
             Some(self.simulation.positions().collect())
         }
     }
@@ -159,7 +159,7 @@ impl Simulation {
     }
 
     /// Checks if the simulation has finished.
-    pub fn finished(&self) -> bool {
+    pub fn is_finished(&self) -> bool {
         self.alpha <= self.alpha_min
     }
 
@@ -222,7 +222,7 @@ impl Simulation {
     }
 
     pub fn iter(&mut self) -> SimulationIter<'_> {
-        let emitted = self.finished();
+        let emitted = self.is_finished();
         SimulationIter {
             simulation: self,
             finished: false,
