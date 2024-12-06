@@ -38,7 +38,10 @@ pub struct Link {
 impl Link {
     pub fn new(links: impl IntoIterator<Item = (usize, usize)>) -> Self {
         Self {
-            links: links.into_iter().map(|(a, b)| (a.into(), b.into())).collect(),
+            links: links
+                .into_iter()
+                .map(|(a, b)| (a.into(), b.into()))
+                .collect(),
             distance_fn: 30.0.into(),
             strength_fn: None,
             iterations: 1,
