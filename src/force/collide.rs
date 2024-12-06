@@ -43,6 +43,11 @@ impl Collide {
         self.iterations = iterations;
         self
     }
+
+    pub fn strength(mut self, strength: f64) -> Self {
+        self.strength = strength;
+        self
+    }
 }
 
 impl ForceBuilder for Collide {
