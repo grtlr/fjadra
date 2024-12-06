@@ -151,16 +151,19 @@ impl<'a> Iterator for SimulationIter<'a> {
 }
 
 impl Simulation {
+    /// Performs a full simulation, until the alpha value reaches the minimum.
     pub fn step(&mut self) {
         while self.alpha > self.alpha_min {
             self.tick(1);
         }
     }
 
+    /// Checks if the simulation has finished.
     pub fn finished(&self) -> bool {
         self.alpha <= self.alpha_min
     }
 
+    /// Advances the simulation by a number of iterations.
     pub fn tick(&mut self, iterations: usize) {
         for _ in 0..iterations {
             self.alpha += (self.alpha_target - self.alpha) * self.alpha_decay;
@@ -184,10 +187,15 @@ impl Simulation {
         }
     }
 
+    /// Returns the names of the forces in the simulation.
     pub fn forces(&self) -> impl Iterator<Item = &str> {
         self.forces.keys().map(|k| k.as_str())
     }
 
+    /// Returns the positions of the particles in the simulation.
+    ///
+    /// The ordering of the nodes in the simulation is stable, so the order of
+    /// the positions will be the same as initially supplied.
     pub fn positions(&self) -> impl Iterator<Item = [f64; 2]> + '_ {
         self.particles.iter().map(|n: &Particle| [n.x, n.y])
     }
@@ -206,6 +214,13 @@ impl Simulation {
         self
     }
 
+    /// Removes a force from the simulation.
+    ///
+    /// Returns `true` if the force was removed, `false` otherwise.
+    pub fn remove_force(&mut self, name: impl AsRef<str>) -> bool {
+        self.forces.remove(name.as_ref()).is_some()
+    }
+
     pub fn iter(&mut self) -> SimulationIter<'_> {
         let emitted = self.finished();
         SimulationIter {
@@ -213,6 +228,13 @@ impl Simulation {
             finished: false,
             emitted,
         }
+    }
+
+    /// Sets the alpha value of the simulation.
+    ///
+    /// This is can be used to restart the simulation.
+    pub fn set_alpha(&mut self, alpha: f64) {
+        self.alpha = alpha;
     }
 }
 
