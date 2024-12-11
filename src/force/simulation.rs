@@ -240,7 +240,7 @@ impl Simulation {
 
 #[cfg(test)]
 mod test {
-    use crate::{PositionX, PositionY};
+    use crate::{ManyBody, PositionX, PositionY};
 
     use super::*;
 
@@ -269,5 +269,20 @@ mod test {
 
         approx::assert_abs_diff_eq!(positions[3][0], 0.0, epsilon = 0.0001);
         approx::assert_abs_diff_eq!(positions[3][1], 0.0, epsilon = 0.0001);
+    }
+
+    #[test]
+    fn prevent_crash_for_large_values() {
+        let mut simulation = SimulationBuilder::default()
+            .build([
+                Node::default(),
+                Node::default(),
+                Node::default(),
+                Node::default(),
+            ])
+            // This force should send the nodes flying away from each other indefinetly.
+            .add_force("charge", ManyBody::default().strength(f64::MIN));
+
+        let _ = simulation.iter().last().unwrap();
     }
 }

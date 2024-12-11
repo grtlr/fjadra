@@ -334,11 +334,13 @@ mod test {
         assert_eq!(cover_root(q.clone(), [-3., -3.]), None);
     }
 
-    // TODO(grtlr): We currently don't handle extents that exceed `i64::MAX`.
+    #[ignore = "We currently don't handle extents that exceed `i64::MAX`."]
     #[test]
-    #[ignore]
     fn does_not_crash_on_huge_values() {
         let mut q = Quadtree::default();
-        q.insert_default(1e23, 0.);
+        q.insert_default(1e19, 0.);
+        q.insert_default(-1e19, 0.);
+        q.insert_default(0., 1e19);
+        q.insert_default(0., -1e19);
     }
 }

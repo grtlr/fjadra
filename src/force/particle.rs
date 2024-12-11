@@ -59,7 +59,9 @@ impl Particle {
             self.x = fx;
             self.vx = 0.0;
         } else {
-            self.x += self.vx;
+            // TODO: This is a somewhat hacky way to prevent particles from
+            // moving too far and therefore overflowing the quadtree.
+            self.x += self.vx.clamp(i32::MIN as f64, i32::MAX as f64);
             self.vx *= velocity_decay;
         }
 
@@ -67,7 +69,9 @@ impl Particle {
             self.y = fy;
             self.vy = 0.0;
         } else {
-            self.y += self.vy;
+            // TODO: This is a somewhat hacky way to prevent particles from
+            // moving too far and therefore overflowing the quadtree.
+            self.y += self.vy.clamp(i32::MIN as f64, i32::MAX as f64);
             self.vy *= velocity_decay;
         }
     }
