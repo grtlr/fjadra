@@ -8,7 +8,7 @@ use scale_chromatic::{Color, ScaleOrdinal, SchemeCategory10};
 fn main() -> anyhow::Result<()> {
     let graph = miserables::Graph::load()?;
 
-    let mut simulation = SimulationBuilder::default()
+    let simulation = SimulationBuilder::default()
         .build(graph.nodes.iter().map(|_| Node::default()))
         .add_force(
             "link",
