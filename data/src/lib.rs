@@ -24,3 +24,26 @@ pub mod miserables {
         }
     }
 }
+
+pub mod random_tree {
+    use rand::{seq::IteratorRandom as _, SeedableRng as _};
+    use rand_chacha::ChaCha8Rng;
+
+    pub fn generate(n: usize) -> (Vec<String>, Vec<(usize, usize)>) {
+        let mut nodes = vec!["0".to_string()];
+        let mut edges = Vec::new();
+
+        let mut rng = ChaCha8Rng::seed_from_u64(42);
+
+        for i in 1..n {
+            let new_node = i.to_string();
+            let existing_node_index = (0..nodes.len())
+                .choose(&mut rng)
+                .expect("`nodes` is guaranteed to contain at least one node");
+            nodes.push(new_node);
+            edges.push((existing_node_index, i));
+        }
+
+        (nodes, edges)
+    }
+}

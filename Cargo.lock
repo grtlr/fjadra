@@ -2230,6 +2230,8 @@ name = "fjadra_data"
 version = "0.0.0"
 dependencies = [
  "anyhow",
+ "rand",
+ "rand_chacha",
  "serde",
  "serde_json",
 ]
