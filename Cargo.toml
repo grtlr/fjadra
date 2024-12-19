@@ -23,7 +23,7 @@ criterion = { version = "0.5.1", features = ["html_reports"] }
 itertools = "0.13.0"
 rand = "0.8.5"
 rand_distr = "0.4.3"
-rerun = { git = "https://github.com/rerun-io/rerun.git", branch = "main", features = ["clap"] }
+rerun = "0.21.0"
 fjadra_data = { path = "data" }
 approx = "0.5.1"
 
