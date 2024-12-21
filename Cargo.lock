@@ -2208,6 +2208,12 @@ dependencies = [
 [[package]]
 name = "fjadra"
 version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c1671b620ba6e60c11c62b0ea5fec4f8621991e7b1229fa13c010a2cd04e4342"
+
+[[package]]
+name = "fjadra"
+version = "0.2.2-alpha.1"
 dependencies = [
  "anyhow",
  "approx",
@@ -2218,12 +2224,6 @@ dependencies = [
  "rand_distr",
  "rerun",
 ]
-
-[[package]]
-name = "fjadra"
-version = "0.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c1671b620ba6e60c11c62b0ea5fec4f8621991e7b1229fa13c010a2cd04e4342"
 
 [[package]]
 name = "fjadra_data"
@@ -5835,7 +5835,7 @@ checksum = "1562eb38ace2d9decf227d2f7e823a003da1a68ac8ce03793e6dcd8ea1fd66d3"
 dependencies = [
  "ahash",
  "egui",
- "fjadra 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "fjadra 0.2.1",
  "nohash-hasher",
  "re_chunk",
  "re_data_ui",

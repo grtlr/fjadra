@@ -3,7 +3,7 @@ name = "fjadra"
 edition = "2021"
 authors = ["Jochen Görtler <me@jgoertler.com>"]
 license = "MIT OR Apache-2.0"
-version = "0.2.1"
+version = "0.2.2-alpha.1"
 description = "Library for simulating physical forces on particles"
 rust-version = "1.80"
 
