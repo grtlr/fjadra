@@ -2219,6 +2219,7 @@ dependencies = [
  "approx",
  "criterion",
  "fjadra_data",
+ "insta",
  "itertools 0.13.0",
  "rand",
  "rand_distr",
@@ -3277,6 +3278,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e05c02b5e89bff3b946cedeca278abc628fe811e604f027c45a8aa3cf793d0eb"
 dependencies = [
  "libc",
+]
+
+[[package]]
+name = "insta"
+version = "1.41.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7e9ffc4d4892617c50a928c52b2961cb5174b6fc6ebf252b2fac9d21955c48b8"
+dependencies = [
+ "console",
+ "lazy_static",
+ "linked-hash-map",
+ "similar",
 ]
 
 [[package]]

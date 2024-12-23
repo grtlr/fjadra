@@ -22,6 +22,7 @@ harness = false
 members = ["data"]
 
 [dev-dependencies]
+insta = "1.41.1"
 anyhow = "1.0.92"
 criterion = { version = "0.5.1", features = ["html_reports"] }
 itertools = "0.13.0"
