@@ -161,7 +161,7 @@ impl LinkForce {
                 if y == 0.0 {
                     y = jiggle(random);
                 }
-                let l = x.hypot(y);
+                let l = (x * x + y * y).sqrt();
                 let l = (l - self.distances[i]) / l * alpha * self.strengths[i];
 
                 let bias_target = self.bias[i];
