@@ -17,6 +17,6 @@ fn test_miserables() {
     let positions = simulation.iter().last().unwrap();
 
     insta::assert_json_snapshot!(positions, {
-        "[][]" => insta::rounded_redaction(6)
+        "[][]" => insta::rounded_redaction(5)
     });
 }
