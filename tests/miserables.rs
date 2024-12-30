@@ -14,7 +14,9 @@ fn test_miserables() {
         .add_force("charge", ManyBody::new())
         .add_force("center", Center::new());
 
-    let positions = simulation.iter().last();
+    let positions = simulation.iter().last().unwrap();
 
-    insta::assert_debug_snapshot!(positions);
+    insta::assert_json_snapshot!(positions, {
+        "[][]" => insta::rounded_redaction(6)
+    });
 }
