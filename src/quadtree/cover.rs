@@ -15,12 +15,18 @@ impl<Q: Default, T> Quadtree<Q, T> {
 
         if x0 > x1 {
             x0 = x;
-            x1 = x0 + 1;
+            x1 = x0.saturating_add(1);
             y0 = y;
-            y1 = y0 + 1;
+            y1 = y0.saturating_add(1);
         } else {
             // Otherwise, double repeatedly to cover.
-            let mut z = if (x1 - x0).is_positive() { x1 - x0 } else { 1 };
+            //
+            // `saturating_sub` guards against the (rare) case where a previous
+            // saturation left x1 - x0 > i64::MAX (e.g. x0 < 0, x1 = i64::MAX).
+            let mut z = {
+                let span = x1.saturating_sub(x0);
+                if span.is_positive() { span } else { 1 }
+            };
 
             let node = if matches!(self.root(), Some(&Node::Internal { .. })) {
                 &mut self.root
@@ -39,23 +45,39 @@ impl<Q: Default, T> Quadtree<Q, T> {
                     handle: self.store.insert(Default::default()),
                 }));
 
-                z *= 2;
+                // Double z with saturation.  When z can no longer grow the
+                // bounds cannot cover the target coordinate exactly; clamp the
+                // affected border(s) to the i64 extremes and stop.  The
+                // out-of-range point will sit in the border cell, which is the
+                // intended "weird-but-no-crash" behaviour.
+                let new_z = z.saturating_mul(2);
+                if new_z == z {
+                    match i {
+                        0 => { x1 = i64::MAX; y1 = i64::MAX; }
+                        1 => { x0 = i64::MIN; y1 = i64::MAX; }
+                        2 => { x1 = i64::MAX; y0 = i64::MIN; }
+                        3 => { x0 = i64::MIN; y0 = i64::MIN; }
+                        _ => unreachable!(),
+                    }
+                    break;
+                }
+                z = new_z;
                 match i {
                     0 => {
-                        x1 = x0 + z;
-                        y1 = y0 + z;
+                        x1 = x0.saturating_add(z);
+                        y1 = y0.saturating_add(z);
                     }
                     1 => {
-                        x0 = x1 - z;
-                        y1 = y0 + z;
+                        x0 = x1.saturating_sub(z);
+                        y1 = y0.saturating_add(z);
                     }
                     2 => {
-                        x1 = x0 + z;
-                        y0 = y1 - z;
+                        x1 = x0.saturating_add(z);
+                        y0 = y1.saturating_sub(z);
                     }
                     3 => {
-                        x0 = x1 - z;
-                        y0 = y1 - z;
+                        x0 = x1.saturating_sub(z);
+                        y0 = y1.saturating_sub(z);
                     }
                     _ => unreachable!(),
                 }
@@ -334,7 +356,9 @@ mod test {
         assert_eq!(cover_root(q.clone(), [-3., -3.]), None);
     }
 
-    #[ignore = "We currently don't handle extents that exceed `i64::MAX`."]
+    /// Previously ignored because the implementation panicked on integer
+    /// overflow.  With saturating arithmetic the tree now completes without
+    /// crashing; extreme coordinates land in the border cells.
     #[test]
     fn does_not_crash_on_huge_values() {
         let mut q = Quadtree::default();
@@ -345,115 +369,102 @@ mod test {
     }
 
     // -----------------------------------------------------------------------
-    // Integer overflow tests
+    // Saturating-arithmetic boundary tests
     //
-    // These tests document that the current implementation overflows on extreme
-    // coordinate values.  They only make sense (and only compile to panicking
-    // code) when debug-assertions are enabled – the default for `cargo test`.
+    // The cover function uses saturating_add / saturating_sub / saturating_mul
+    // so that extreme i64 coordinates never panic.  The tests below verify
+    // that every previously-overflowing code path now completes and that the
+    // resulting extent is self-consistent (x0 <= x1, y0 <= y1).
     //
-    // Overflow sites in cover.rs (line numbers are approximate):
+    // Overflow sites that are now saturated (line numbers approximate):
     //
-    //   L18  x1 = x0 + 1        — initial extent setup for empty tree
-    //   L20  y1 = y0 + 1        — initial extent setup for empty tree
-    //   L42  z *= 2             — doubling loop, z reaches 2^63
-    //   L45  x1 = x0 + z       — x0 large positive, z reaches i64::MAX/2+1
-    //   L46  y1 = y0 + z       — y0 large positive, z reaches i64::MAX/2+1
-    //
-    // The subtraction arms (x0 = x1 - z, y0 = y1 - z) cannot be made to
-    // overflow before z *= 2 does through any representable f64 input, because
-    // reaching below i64::MIN would require an x or y value smaller than
-    // i64::MIN, which a saturating f64-to-i64 cast makes impossible.
+    //   L18  x1 = x0.saturating_add(1)   — initial extent, x at i64::MAX
+    //   L20  y1 = y0.saturating_add(1)   — initial extent, y at i64::MAX
+    //   L42  z = z.saturating_mul(2)     — doubling loop; break on saturation
+    //   L45  x1 = x0.saturating_add(z)  — large positive x0
+    //   L46  y1 = y0.saturating_add(z)  — large positive y0
     // -----------------------------------------------------------------------
 
-    /// Covering `i64::MAX` on an **empty** tree overflows at `x1 = x0 + 1`
-    /// (line 18): `floor(i64::MAX as f64) as i64` saturates to `i64::MAX`, so
-    /// `x0 + 1 = i64::MAX + 1` overflows.
-    #[cfg(debug_assertions)]
+    fn extent_is_consistent(q: &Quadtree) {
+        let ([x0, y0], [x1, y1]) = q.extent();
+        assert!(x0 <= x1, "x0={x0} > x1={x1}");
+        assert!(y0 <= y1, "y0={y0} > y1={y1}");
+    }
+
+    /// `floor(i64::MAX as f64) as i64` saturates to `i64::MAX`, so the
+    /// initial `x0.saturating_add(1)` clamps to `i64::MAX` rather than
+    /// panicking.
     #[test]
-    #[should_panic]
-    fn overflow_x_plus_one_on_empty_tree() {
+    fn saturating_x_plus_one_on_empty_tree() {
         let mut q = Quadtree::default();
         q.cover(i64::MAX as f64, 0.0);
+        extent_is_consistent(&q);
     }
 
-    /// Covering `i64::MAX` in the y-axis on an **empty** tree overflows at
-    /// `y1 = y0 + 1` (line 20) for the same reason as the x-axis case above.
-    #[cfg(debug_assertions)]
+    /// Same for the y axis.
     #[test]
-    #[should_panic]
-    fn overflow_y_plus_one_on_empty_tree() {
+    fn saturating_y_plus_one_on_empty_tree() {
         let mut q = Quadtree::default();
         q.cover(0.0, i64::MAX as f64);
+        extent_is_consistent(&q);
     }
 
-    /// With a non-empty tree anchored at 0, covering `i64::MAX` in x requires
-    /// ~62 doublings of `z`.  The last `z *= 2` overflows when `z` would
-    /// become `2^63 > i64::MAX`.
-    #[cfg(debug_assertions)]
+    /// Covering `i64::MAX` in x from a near-zero tree saturates `z` after
+    /// ~62 doublings; the loop breaks and the border cell absorbs the point.
     #[test]
-    #[should_panic]
-    fn overflow_z_doubling_toward_positive_x() {
+    fn saturating_z_doubling_toward_positive_x() {
         let mut q = Quadtree::default();
         q.cover(0.0, 0.0);
         q.cover(i64::MAX as f64, 0.0);
+        extent_is_consistent(&q);
     }
 
-    /// Same as `overflow_z_doubling_toward_positive_x` but along the y axis.
-    #[cfg(debug_assertions)]
+    /// Same along the y axis.
     #[test]
-    #[should_panic]
-    fn overflow_z_doubling_toward_positive_y() {
+    fn saturating_z_doubling_toward_positive_y() {
         let mut q = Quadtree::default();
         q.cover(0.0, 0.0);
         q.cover(0.0, i64::MAX as f64);
+        extent_is_consistent(&q);
     }
 
-    /// With a non-empty tree anchored at 0, covering `i64::MIN` in x forces
-    /// ~62 left-expanding doublings.  The last `z *= 2` overflows when `z`
-    /// would become `2^63 > i64::MAX`.
-    #[cfg(debug_assertions)]
+    /// Covering `i64::MIN` in x saturates `z` during left-expanding doublings.
     #[test]
-    #[should_panic]
-    fn overflow_z_doubling_toward_negative_x() {
+    fn saturating_z_doubling_toward_negative_x() {
         let mut q = Quadtree::default();
         q.cover(0.0, 0.0);
         q.cover(i64::MIN as f64, 0.0);
+        extent_is_consistent(&q);
     }
 
-    /// Same as `overflow_z_doubling_toward_negative_x` but along the y axis.
-    #[cfg(debug_assertions)]
+    /// Same along the y axis.
     #[test]
-    #[should_panic]
-    fn overflow_z_doubling_toward_negative_y() {
+    fn saturating_z_doubling_toward_negative_y() {
         let mut q = Quadtree::default();
         q.cover(0.0, 0.0);
         q.cover(0.0, i64::MIN as f64);
+        extent_is_consistent(&q);
     }
 
-    /// When `x0 = 2^62`, `z` doubles to `2^62` without itself overflowing,
-    /// but `x1 = x0 + z = 2^62 + 2^62 = 2^63` overflows at line 45 — one
-    /// iteration *before* `z *= 2` would have overflowed.
-    #[cfg(debug_assertions)]
+    /// With `x0 = 2^62`, `z` reaches `2^62` and `x0.saturating_add(z)` clamps
+    /// to `i64::MAX` instead of overflowing.
     #[test]
-    #[should_panic]
-    fn overflow_x1_equals_x0_plus_z() {
+    fn saturating_x1_equals_x0_plus_z() {
         // i64::MAX / 2 + 1 = 2^62, exactly representable as f64.
         let half_max = (i64::MAX / 2 + 1) as f64;
         let mut q = Quadtree::default();
-        q.cover(half_max, 0.0); // empty-tree path: x0 = 2^62, x1 = 2^62 + 1
-        q.cover(i64::MAX as f64, 0.0); // doubling loop: x1 = 2^62 + 2^62 overflows
+        q.cover(half_max, 0.0);
+        q.cover(i64::MAX as f64, 0.0);
+        extent_is_consistent(&q);
     }
 
-    /// Same as `overflow_x1_equals_x0_plus_z` but for `y1 = y0 + z` at
-    /// line 46: when `y0 = 2^62` and `z` reaches `2^62`, the addition
-    /// `y0 + z = 2^63` overflows before `z *= 2` would.
-    #[cfg(debug_assertions)]
+    /// Same for `y1 = y0.saturating_add(z)` when `y0 = 2^62`.
     #[test]
-    #[should_panic]
-    fn overflow_y1_equals_y0_plus_z() {
+    fn saturating_y1_equals_y0_plus_z() {
         let half_max = (i64::MAX / 2 + 1) as f64;
         let mut q = Quadtree::default();
-        q.cover(0.0, half_max); // empty-tree path: y0 = 2^62, y1 = 2^62 + 1
-        q.cover(0.0, i64::MAX as f64); // doubling loop: y1 = 2^62 + 2^62 overflows
+        q.cover(0.0, half_max);
+        q.cover(0.0, i64::MAX as f64);
+        extent_is_consistent(&q);
     }
 }
